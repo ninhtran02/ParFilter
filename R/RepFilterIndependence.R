@@ -282,7 +282,7 @@ Repfilter <- function(p, error_targets, u, groups = NULL, u_groups = NULL,
 #'  a numeric of study-specific and group-specific FDR target levels, the partition, the local replicability levels, and the local error weights.
 #' @export
 #'
-#' @examples obj <- Repfilter(p = DMD.pvalues, error_targets = rep(0.05, 5),
+#' @examples obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5),
 #' u = 3, groups = list(c(1,3),c(2,4)),
 #' group_options = c(2,1),
 #' selections = NULL, u_groups = c(2,1),

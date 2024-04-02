@@ -58,7 +58,7 @@ A list containing the study-specific rejections, the rejections for assessing re
 Par-filter
 }
 \examples{
-obj <- Repfilter(p = DMD.pvalues, error_targets = rep(0.05, 5),
+obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5),
 u = 3, groups = list(c(1,3),c(2,4)),
 group_options = c(2,1),
 selections = NULL, u_groups = c(2,1),
