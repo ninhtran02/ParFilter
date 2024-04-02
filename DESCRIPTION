@@ -1,0 +1,15 @@
+Package: ParFilter
+Type: Package
+Title: Par-Filter
+Version: 1.0.0
+Author: Ninh Tran
+Maintainer: Ninh Tran <ninh.tran@student.unimelb.edu.au>
+Description: An implementation of the partial conjunction partitioning and filtering algorithm.
+License: GNU GPL
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    partition
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 2.10)
