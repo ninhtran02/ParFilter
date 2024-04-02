@@ -1,5 +1,5 @@
 # Par-filter
- Implementation of the PC partitioning and filtering algorithm
+ Implementation of the partial conjunction partitioning and filtering algorithm.
 
  ## EXAMPLE
  ```
