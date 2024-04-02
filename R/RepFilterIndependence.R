@@ -313,10 +313,11 @@ parfilter <- function(p, error_targets, u, groups = NULL, u_groups = NULL,
 
   # Last modified: Ninh Tran 2 April 2024
 
-  return(Repfilter (p, error_targets, u, groups = NULL, u_groups = NULL,
-             w = NULL, selections = NULL, adaptive,
-             lambda = NULL, auto = FALSE, omega = 0.5,
-             group_options = NULL, partition = NULL, method = "Simes"))
+  return(Repfilter(p = p, error_targets = error_targets, u = u,
+                   groups = groups, u_groups = u_groups,
+                  w = w, selections = selections, adaptive = adaptive,
+                  lambda = lambda, auto = auto, omega = omega,
+                  group_options = group_options, partition = partition, method = method))
 
 }
 
