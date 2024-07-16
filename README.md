@@ -27,7 +27,7 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account.
 
-2. Create a slurm file called *job_submission_bimodal.slurm* as follows:
+2. Create a slurm file called *Repmain.slurm* as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -47,7 +47,7 @@ Rscript --vanilla Repmain.R $rho $mu $setup
 
 ```
 
-Furthermore, create a slurm file called *batch_submission_bimodal.slurm* as follows:
+Furthermore, create a slurm file called *batch_submission_Repmain.slurm* as follows:
 ```
 #!/bin/bash
 
@@ -68,18 +68,17 @@ done
 
 done
 
-
 ``` 
 
-3. In your HPC account, change your current directory to the ZDIRECT folder using the "cd" command:
+3. In your HPC account, change your current directory to the "Paper Simulations" folder using the "cd" command:
 ```
-cd    (your own working directory)/ZDIRECT
+cd    (your own working directory)/Paper Simulations
 ```
-Make sure *main_bimodal2.R*, *job_submission_bimodal.slurm* and *batch_submission_bimodal.slurm* are inside the ZDIRECT folder.
+Make sure *main_bimodal2.R*, *job\_submission\_bimodal.slurm* and *batch\_submission\_bimodal.slurm* are inside the "Paper Simulations" folder.
 
 4. To submit the jobs, run the two files *batch\_submission\_bimodal.slurm* with the command:
 ```
-sbatch batch_submission_bimodal.slurm
+sbatch batch_submission_Repmain.slurm
 ```
 
-5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *ZDIRECT/simResults*, *ZDIRECT/simResultsrhopos05*, *ZDIRECT/simResultsrhopos08*, *ZDIRECT/simResultsrhoneg05* and *ZDIRECT/simResultsrhoneg08*.
+5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/simResults*, *Paper Simulation/simResultsrhopos05*, *Paper Simulation/simResultsrhopos08*, *Paper Simulation/simResultsrhoneg05* and *Paper Simulation/simResultsrhoneg08*.
