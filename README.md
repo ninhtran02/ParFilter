@@ -74,11 +74,11 @@ done
 ```
 cd    (your own working directory)/Paper Simulations
 ```
-Make sure *main_bimodal2.R*, *job\_submission\_bimodal.slurm* and *batch\_submission\_bimodal.slurm* are inside the "Paper Simulations" folder.
+Make sure *main_bimodal2.R*, *Repmain.slurm* and *batch\_submission\_Repmain.slurm* are inside the "Paper Simulations" folder.
 
-4. To submit the jobs, run the two files *batch\_submission\_bimodal.slurm* with the command:
+4. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
 sbatch batch_submission_Repmain.slurm
 ```
 
-5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/simResults*, *Paper Simulation/simResultsrhopos05*, *Paper Simulation/simResultsrhopos08*, *Paper Simulation/simResultsrhoneg05* and *Paper Simulation/simResultsrhoneg08*.
+5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*, *Paper Simulation/SavedData/NegativeDependence*, and *Paper Simulation/SavedData/PositiveDependence*.
