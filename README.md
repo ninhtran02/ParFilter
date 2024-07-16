@@ -74,7 +74,7 @@ done
 ```
 cd    (your own working directory)/Paper Simulations
 ```
-Make sure *main_bimodal2.R*, *Repmain.slurm* and *batch\_submission\_Repmain.slurm* are inside the "Paper Simulations" folder.
+Download *Repmain.R* in https://github.com/ninhtran02/ParFilter/tree/main/R and place it in the "Paper Simulations" folder. Furthermore, sake sure *main_bimodal2.R*, *Repmain.slurm* and *batch\_submission\_Repmain.slurm* are inside the folder as well.
 
 4. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
@@ -82,6 +82,8 @@ sbatch batch_submission_Repmain.slurm
 ```
 
 5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*, *Paper Simulation/SavedData/NegativeDependence*, and *Paper Simulation/SavedData/PositiveDependence*.
+   
+6. To run produce the plots, download and run *Plot.R*, *NegativeDependencPlot.R*, and *PositiveDependencePlot.R* from https://github.com/ninhtran02/ParFilter/tree/main/R.
 
 ## How to reproduce the real data results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 
