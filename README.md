@@ -22,7 +22,7 @@ obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = 
 print(obj)
 ```
 
-## How to reproduce the simulation results for "TESTING FOR REPLICATING SIGNALS ACROSS MULTIPLE STUDIES VIA PARTITIONING AND FILTERING"
+## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
@@ -30,23 +30,20 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 2. Create a slurm file called *job_submission_bimodal.slurm* as follows:
 ```
 #!/bin/bash
-#SBATCH --job-name=dFDR_bimodal
+#SBATCH --job-name=REP
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --mem=3500
-#SBATCH --time=00-80:00:00
+#SBATCH --mem=10000
+#SBATCH --time=00-60:00:00
 
-nullprop=$1
+rho=$1
 mu=$2
-symm=$3
-rho=$4
-
+setup=$3
 
 module --force purge
 module load foss/2022a R/4.2.2
 
-
-Rscript --vanilla main_bimodal2.R $nullprop $mu $symm $rho
+Rscript --vanilla Repmain.R $rho $mu $setup
 
 ```
 
