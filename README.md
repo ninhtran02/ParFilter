@@ -51,25 +51,20 @@ Furthermore, create a slurm file called *batch_submission_bimodal.slurm* as foll
 ```
 #!/bin/bash
 
-
-for nullprop in 0 0.2 0.5 0.8
+for rho in {1..3}
 do
 
-  for mu in 0.5 1 1.5 2 2.5 3 
-  do
-  
-    for symm in 0.5 0.75 1
-    do
-    	for rho in -0.8	-0.5 0 0.50 0.80
-    	do
-  
-              sbatch /data/gpfs/projects/punim1426/ZDIRECT/job_submission_bimodal.slurm $nullprop $mu $symm $rho
-	
-  	done
-    
-      done
-  
-  done
+for mu in {1..6}
+do
+
+for setup in {1..9}
+do
+
+sbatch Repmain.slurm $rho $mu $setup
+
+done
+
+done
 
 done
 
