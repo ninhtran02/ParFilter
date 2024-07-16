@@ -82,3 +82,15 @@ sbatch batch_submission_Repmain.slurm
 ```
 
 5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*, *Paper Simulation/SavedData/NegativeDependence*, and *Paper Simulation/SavedData/PositiveDependence*.
+
+## How to reproduce the real data results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
+
+Download the folder https://github.com/ninhtran02/ParFilter/tree/main/Real%20Data and run DMD_meta_analysis.R and AIRE_meta_analysis.R to reproduce the real data results.
+
+
+
+
+
+
+
+
