@@ -21,7 +21,7 @@ print(obj)
 ```
 ### Arguments
 - `p`: a mxn matrix of p-values
-- `error_targets`: numeric of FDR targets. The first \eqn{n} elements are the study-specific FDR. The last element is the replicability FDR
+- `error_targets`: numeric of FDR targets. The first n elements are the study-specific FDR. The last element is the replicability FDR
 - `u`: the replicability threshold
 - `groups`: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
 - `selections`: list of numerics denoting the selections. If left NUll, `selections` will be automatically be generated
