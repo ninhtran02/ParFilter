@@ -14,13 +14,14 @@ devtools::install_github("ninhtran02/Parfilter")
 library(ParFilter)
 obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = list(c(1,3),c(2,4)), 
                  group_options = c(2,1), selections = NULL, u_groups = c(2,1),
-                 adaptive = TRUE, lambda = NULL,
-                 auto = FALSE, omega = 0.5, w = c(0.5,0.5),
-                 partition = NULL, method = "Stouffer")
+                 adaptive = TRUE, lambda = NULL, omega = 0.5, w = c(0.5,0.5), method = "Stouffer")
 
 # Print the results
 print(obj)
 ```
+# Arguments
+- 123
+- -32
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
