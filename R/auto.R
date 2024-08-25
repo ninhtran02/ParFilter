@@ -5,9 +5,9 @@ loss_function <- function(p, u, groups, error_targets, omega){
   # groups is a list of numerics denoting which studies belong to which groups
   # q is a vector of study-specific FDR targets
   # omega is a tuning parameter between 0 and 1
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m = nrow(p)
   n = ncol(p)
   K <- length(groups)
@@ -26,11 +26,11 @@ loss_function <- function(p, u, groups, error_targets, omega){
   }
   w <- u_groups/u
   q <- c(error_targets[1:n], rep(error_targets[n + 1], K)*w)
-  
-  quantityA <- compute_Srep(p = p, t = q, u = u, groups = groups, u_groups = u_groups, 
+
+  quantityA <- compute_Srep(p = p, t = q, u = u, groups = groups, u_groups = u_groups,
                selections = rep(list(1:m),K), method = "Stouffer")
   return(length(quantityA))
-  
+
 }
 
 # AUTO-PARTITIONING ALGORITHM
@@ -41,14 +41,14 @@ auto_partition <- function(p, u, error_targets, omega, group_options){
   # error_targets is a vector of study-specific FDR and FDRrep targets
   # omega is a tuning parameter between 0 and 1
   # groups_options is a list of lists of group partitions
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m <- dim(p)[1]
   n <- dim(p)[2]
-  
+
   q <- error_targets
-  
+
   tracker <- c()
   for(groups in group_options){
     if(!is.list(groups)){
@@ -58,15 +58,15 @@ auto_partition <- function(p, u, error_targets, omega, group_options){
                                         error_targets = error_targets, omega = omega))
     #print(tracker)
   }
-  
+
   pick <- which.min(abs(tracker - quantile(x = tracker, probs = omega)))
-  
+
   groups <- group_options[[pick]]
   if(!is.list(groups)){
     groups <- list(groups)
   }
   K <- length(groups)
-  
+
   u_groups <- rep(1,K)
   l <- 1
   while(sum(u_groups) != u){
@@ -80,10 +80,10 @@ auto_partition <- function(p, u, error_targets, omega, group_options){
     #print(u_groups)
     l <- l + 1
   }
-  
+
   w <- u_groups/u
   #w <- (u_groups^2)/sum(u_groups^2)
-  
+
   output <- list(groups = groups, u_groups = u_groups, w = w)
   return(output)
 }
@@ -96,12 +96,12 @@ minimum_partition <- function(p, u){
   # INPUTS
   # p is a matrix of p-values
   # u is the replicability threshold
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m = nrow(p)
   n = ncol(p)
-  
+
   K <- 2
   #group_size <- rep(1,K)*floor(n/K)
   #l <- 1
@@ -124,9 +124,9 @@ minimum_partition <- function(p, u){
     #print(u_groups)
     l <- l + 1
   }
-  
+
   w <- u_groups/u
-  
+
   output <- list(groups = groups, u_groups = u_groups, w = w)
   return(output)
 }
@@ -136,18 +136,18 @@ balanced_partition <- function(p, u){
   # INPUTS
   # p is a matrix of p-values
   # u is the replicability threshold
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m = nrow(p)
   n = ncol(p)
-  
+
   if(u == 2){
     return(minimum_partition(p, u))
   }
-  
+
   K <- floor(u/2)
-  
+
   group_size <- rep(1,K)
   k <- 1
   while(sum(group_size) != n){
@@ -155,7 +155,7 @@ balanced_partition <- function(p, u){
     group_size[k] <- group_size[k] + 1
     k <- k + 1
   }
-  
+
   groups <- list()
   l <- 0
   for(k in 1:K){
@@ -166,7 +166,7 @@ balanced_partition <- function(p, u){
     }
     groups <- c(groups, list(members))
   }
-  
+
   u_groups <- rep(1,K)
   l <- 1
   while(sum(u_groups) != u){
@@ -180,9 +180,9 @@ balanced_partition <- function(p, u){
     #print(u_groups)
     l <- l + 1
   }
-  
+
   w <- u_groups/u
-  
+
   output <- list(groups = groups, u_groups = u_groups, w = w)
   return(output)
 }
@@ -192,40 +192,40 @@ maximum_partition <- function(p, u){
   # INPUTS
   # p is a matrix of p-values
   # u is the replicability threshold
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m = nrow(p)
   n = ncol(p)
   K <- u
-  
+
   groups <- split(1:n, (1:n) %% u)
   groups <- rev(groups[order(sapply(groups, length))])
-  
+
   u_groups <- rep(1,K)
-  
+
   w <- u_groups/u
-  
+
   output <- list(groups = groups, u_groups = u_groups, w = w)
-  
+
   return(output)
 }
 
 # Recommended SELECTIONS
-recommended_selection <- function(p, q, u, groups, u_groups, 
+recommended_selection <- function(p, q, u, groups, u_groups,
                                adaptive, lambda, method){
   # INPUTS
   # p is a matrix of p-values
   # u is the replicability threshold
   # error targets is a n+1 numeric of error targets
   # method is the combining method
-  
+
   # Last modified: Ninh Tran 2 April 2024
-  
+
   m = nrow(p)
   n = ncol(p)
   K <- length(groups)
-  
+
   selections <- list()
   for(k in 1:K){
     S_sf <- 1:m
@@ -237,11 +237,11 @@ recommended_selection <- function(p, q, u, groups, u_groups,
       method_list <- split(rep(method,m), 1:m)
       simes_pu <- mapply(PC_u, p = p_list, u = u_list, method = method_list)
       simes_pu <- unname(simes_pu)
-      if(adaptive[n + l]){
-        S_sf <- intersect(S_sf, which(simes_pu <= lambda[n + l]))
-      } else {
-        S_sf <- intersect(S_sf, which(simes_pu <= q[n + l]))
-      }
+      #if(adaptive[n + l]){
+      #  S_sf <- intersect(S_sf, which(simes_pu <= lambda[n + l]))
+      #} else {
+      #  S_sf <- intersect(S_sf, which(simes_pu <= q[n + l]))
+      #}
     }
     selections <- c(selections, list(S_sf))
   }

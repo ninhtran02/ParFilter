@@ -263,20 +263,20 @@ Repfilter <- function(p, error_targets, u, groups = NULL, u_groups = NULL,
 
 #' Par-filter
 #'
-#' @param p a matrix of p-values
+#' @param p a \eqn{mxn} matrix of p-values
 #' @param error_targets numeric of FDR targets. The first \eqn{n} elements are the study-specific FDR. The last element is the replicability FDR.
 #' @param u the replicability threshold
 #' @param groups the partition of the n studies. It is a list of numerics denoting which studies belong to which groups. This can be left NULL if \code{auto = TRUE} or a type of \code{partition} is specified.
 #' @param u_groups numeric of the replicability thresholds for each group. If left NULL, \code{u_groups} will automatically be generated.
 #' @param w numeric of error weights. If left NULL, \code{w} will automatically be generated.
-#' @param selections list of numerics denoting the selections. If left NUll, \code{selections} will be automatically be generated based on whether \code{adaptive} is \code{TRUE} or \code{FALSE}.
-#' @param adaptive Boolean indicating whether to use adaptivity or not.
-#' @param lambda numeric of tuning parameters for adaptivity. If left NUll, \code{lambda} will be automatically be generated based on whether \code{error_targets}.
+#' @param selections list of numerics denoting the selections. If left NUll, \code{selections} will be automatically be generated.
+#' @param adaptive Boolean indicating whether to use adaptive null proportion estimators or not
+#' @param lambda numeric of tuning parameters for adaptive null proportion estimators. The first n elements are the study-specific tuning parameters. The last element is the replicability analysis tuning parameter. If left NUll, lambda will be automatically be generated based on \code{error_targets}.
 #' @param auto Boolean indicating whether to automatically compute the study partition
-#' @param omega the overfitting tuning parameter for the automatic partioning algorithm
+#' @param omega the overfitting tuning parameter for the automatic partitioning algorithm
 #' @param group_options list of candidate partitions(a list) for the automatic partitioning algorithm
 #' @param partition the type of partition if groups is NULL. If \code{partition = "minimum"}, a neutral partition will be created with \eqn{K = 2} groups. If \code{partition = "minimum"}, a neutral partition will be created with \eqn{K = u} groups.
-#' @param method the combining method
+#' @param method the combining method. Can be \code{"Fisher"}, \code{"Stouffer"}, or \code{"Simes"}.
 #'
 #' @return A list containing the study-specific rejections, the rejections for assessing replicability,
 #'  a numeric of study-specific and group-specific FDR target levels, the partition, the local replicability levels, and the local error weights.
@@ -297,7 +297,7 @@ parfilter <- function(p, error_targets, u, groups = NULL, u_groups = NULL,
 
   # INPUTS
   # p is a matrix of p-values
-  # q is a numeric of the error targets
+  # error_targets is a numeric of the error targets
   # u is the replicability threshold
   # groups is a list of numerics denoting which studies belong to which groups
   # u_groups is a numeric of the replicability thresholds for each group
