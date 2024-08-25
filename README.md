@@ -35,7 +35,7 @@ print(obj)
 - `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`
 
 ### Values
-The `parfilter` returns a list that contains
+The `parfilter` returns a list that contains the rejections for the replicability analysis and the study-specific inferences.
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
