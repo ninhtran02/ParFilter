@@ -12,7 +12,11 @@ devtools::install_github("ninhtran02/Parfilter")
  ## Usage example
  ```
 library(ParFilter)
-obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = list(c(1,3),c(2,4)), 
+m <- 5000
+n <- 4
+P <- matrix(c(rnorm(19000,0),rnorm(1000,3)), nrow = m, ncol = n, byrow = TRUE)
+P <- 1 - pnorm(P)
+obj <- parfilter(p = P, error_targets = rep(0.05, 5), u = 3, groups = list(c(1,3),c(2,4)), 
                  selections = NULL, u_groups = c(2,1), adaptive = TRUE,
                  lambda = NULL, w = c(0.5,0.5), method = "Fisher")
 
@@ -28,8 +32,11 @@ print(obj)
 - `u_groups`: numeric of the replicability thresholds for each group. If left NULL, `u_groups` will automatically be generated
 - `adaptive`: Boolean indicating whether to use adaptive null proportion estimators or not
 - `lambda`: numeric of tuning parameters for adaptive null proportion estimators. The first n elements are the study-specific tuning parameters. The last element is the replicability analysis tuning parameter. If left NUll, `lambda` will be automatically be generated based on `error_targets`.
-- `w`: numeric of error weights. If left `NULL`, `w` will automatically be generated.
-- `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`.
+- `w`: numeric of error weights. If left `NULL`, `w` will automatically be generated
+- `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`
+
+### Values
+The `parfilter` returns a list that contains the rejections for the replicability analysis and the study-specific inferences.
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
