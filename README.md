@@ -20,16 +20,16 @@ obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = 
 print(obj)
 ```
 ### Arguments
-- p:
-- error_targets:
-- u:
-- groups:
-- selections:
-- u_groups:
-- adaptive:
-- lambda:
-- w:
-- method:
+- p: a mxn matrix of p-values
+- error_targets: numeric of FDR targets. The first \eqn{n} elements are the study-specific FDR. The last element is the replicability FDR
+- u: the replicability threshold
+- groups: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
+- selections: list of numerics denoting the selections. If left NUll, \code{selections} will be automatically be generated
+- u_groups: numeric of the replicability thresholds for each group. If left NULL, \code{u_groups} will automatically be generated
+- adaptive: Boolean indicating whether to use adaptive null proportion estimators or not
+- lambda: numeric of tuning parameters for adaptivity. If left NUll, \code{lambda} will be automatically be generated based on \code{error_targets}.
+- w: numeric of error weights. If left NULL, \code{w} will automatically be generated.
+- method: the combining method. Can be "Fisher", "Stouffer", or "Simes".
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
