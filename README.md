@@ -13,14 +13,23 @@ devtools::install_github("ninhtran02/Parfilter")
  ```
 library(ParFilter)
 obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = list(c(1,3),c(2,4)), 
-                 group_options = c(2,1), selections = NULL, u_groups = c(2,1),
-                 adaptive = TRUE, lambda = NULL,
-                 auto = FALSE, omega = 0.5, w = c(0.5,0.5),
-                 partition = NULL, method = "Stouffer")
+                 selections = NULL, u_groups = c(2,1), adaptive = TRUE,
+                 lambda = NULL, w = c(0.5,0.5), method = "Fisher")
 
 # Print the results
 print(obj)
 ```
+### Arguments
+- `p`: a mxn matrix of p-values
+- `error_targets`: numeric of FDR targets. The first n elements are the study-specific FDR. The last element is the replicability FDR
+- `u`: the replicability threshold
+- `groups`: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
+- `selections`: list of numerics denoting the selections. If left `NUll`, `selections` will be automatically used the suggested selection rule
+- `u_groups`: numeric of the replicability thresholds for each group. If left NULL, `u_groups` will automatically be generated
+- `adaptive`: Boolean indicating whether to use adaptive null proportion estimators or not
+- `lambda`: numeric of tuning parameters for adaptive null proportion estimators. The first n elements are the study-specific tuning parameters. The last element is the replicability analysis tuning parameter. If left NUll, `lambda` will be automatically be generated based on `error_targets`.
+- `w`: numeric of error weights. If left `NULL`, `w` will automatically be generated.
+- `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`.
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
@@ -74,7 +83,7 @@ done
 ```
 cd    (your own working directory)/Paper Simulations
 ```
-Make sure *main_bimodal2.R*, *Repmain.slurm* and *batch\_submission\_Repmain.slurm* are inside the "Paper Simulations" folder.
+Download *Repmain.R* in https://github.com/ninhtran02/ParFilter/tree/main/R and place it in the "Paper Simulations" folder. Furthermore, sake sure *main_bimodal2.R*, *Repmain.slurm* and *batch\_submission\_Repmain.slurm* are inside the folder as well.
 
 4. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
@@ -82,6 +91,8 @@ sbatch batch_submission_Repmain.slurm
 ```
 
 5. The simulations will typically be finished in about a day, with the resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*, *Paper Simulation/SavedData/NegativeDependence*, and *Paper Simulation/SavedData/PositiveDependence*.
+   
+6. To run produce the plots, download and run *Plot.R*, *NegativeDependencPlot.R*, and *PositiveDependencePlot.R* from https://github.com/ninhtran02/ParFilter/tree/main/R.
 
 ## How to reproduce the real data results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
 
