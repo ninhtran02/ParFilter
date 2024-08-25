@@ -24,11 +24,11 @@ print(obj)
 - `error_targets`: numeric of FDR targets. The first n elements are the study-specific FDR. The last element is the replicability FDR
 - `u`: the replicability threshold
 - `groups`: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
-- `selections`: list of numerics denoting the selections. If left NUll, `selections` will be automatically be generated
+- `selections`: list of numerics denoting the selections. If left `NUll`, `selections` will be automatically used the suggested selection rule
 - `u_groups`: numeric of the replicability thresholds for each group. If left NULL, `u_groups` will automatically be generated
 - `adaptive`: Boolean indicating whether to use adaptive null proportion estimators or not
-- `lambda`: numeric of tuning parameters for adaptivity. If left NUll, `lambda` will be automatically be generated based on `error_targets`.
-- `w`: numeric of error weights. If left NULL, `w` will automatically be generated.
+- `lambda`: numeric of tuning parameters for adaptive null proportion estimators. The first n elements are the study-specific tuning parameters. The last element is the replicability analysis tuning parameter. If left NUll, `lambda` will be automatically be generated based on `error_targets`.
+- `w`: numeric of error weights. If left `NULL`, `w` will automatically be generated.
 - `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`.
 
 ## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
