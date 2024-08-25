@@ -20,7 +20,7 @@ obj <- parfilter(p = DMD.pvalues, error_targets = rep(0.05, 5), u = 3, groups = 
 print(obj)
 ```
 ### Arguments
-- p: a mxn matrix of p-values
+- 'p': a mxn matrix of p-values
 - error_targets: numeric of FDR targets. The first \eqn{n} elements are the study-specific FDR. The last element is the replicability FDR
 - u: the replicability threshold
 - groups: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
