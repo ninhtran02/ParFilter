@@ -93,14 +93,7 @@ for(iter in 1:nsim){
 
   for(method in methods){
     if(method == "PF"){
-      obj <- parfilter(p = p, error_targets = c(rep(alpha/5, n),alpha),
-                      u = u, groups = NULL, group_options = group_options,
-                      selections = NULL, u_groups = NULL,
-                      adaptive = FALSE, lambda = NULL,
-                      auto = FALSE, omega = 0.5, w = NULL,
-                      partition = "minimum", method = "Stouffer")
-      rep_rejection_list[[method]] <- obj$Replicability_Rejections
-      study_rejection_list[[method]] <- obj$Studywise_Rejections
+      O
     }
 
     if(method == "MaxPF"){
