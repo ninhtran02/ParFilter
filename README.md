@@ -60,7 +60,7 @@ module load foss/2022a R/4.2.2
 
 Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
-Feel free to edit the #SBATCH commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes.
+Feel free to edit the #SBATCH commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes. This may be useful since the simulations do take a while. You should typically expect the simulations to finish within half a day.
 
 Furthermore, create a slurm file called *batch_submission_Repmain.slurm* as follows:
 ```
