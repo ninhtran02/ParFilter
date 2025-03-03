@@ -16,30 +16,29 @@ m <- 5000
 n <- 4
 P <- matrix(c(rnorm(19000,0),rnorm(1000,3)), nrow = m, ncol = n, byrow = TRUE)
 P <- 1 - pnorm(P)
-obj <- parfilter(p = P, error_targets = rep(0.05, 5), u = 3, groups = list(c(1,3),c(2,4)), 
-                 selections = NULL, u_groups = c(2,1), adaptive = TRUE,
-                 lambda = NULL, w = c(0.5,0.5), method = "Fisher")
+obj <- ParFilter_FDR(p_mat = P, X_list = X_list, u = 4, q = 0.05, K = 4,
+                             method = "Stouffer", adaptive = TRUE, cross_weights = FALSE,
+                             lambdas = rep(0.50,K))
 
 # Print the results
 print(obj)
 ```
 ### Arguments
-- `p`: a mxn matrix of p-values
-- `error_targets`: numeric of FDR targets. The first n elements are the study-specific FDR. The last element is the replicability FDR
-- `u`: the replicability threshold
-- `groups`: the partition of the n studies. It is a list of numerics denoting which studies belong to which groups
-- `selections`: list of numerics denoting the selections. If left `NUll`, `selections` will be automatically used the suggested selection rule
-- `u_groups`: numeric of the replicability thresholds for each group. If left NULL, `u_groups` will automatically be generated
-- `adaptive`: Boolean indicating whether to use adaptive null proportion estimators or not
-- `lambda`: numeric of tuning parameters for adaptive null proportion estimators. The first n elements are the study-specific tuning parameters. The last element is the replicability analysis tuning parameter. If left NUll, `lambda` will be automatically be generated based on `error_targets`.
-- `w`: numeric of error weights. If left `NULL`, `w` will automatically be generated
-- `method:` the combining method. Can be `"Fisher"`, `"Stouffer"`, or `"Simes"`
+- `p_mat`: mxn matrix of p-values.
+- `X_list`: list of length n, containing the covariates for each study.
+- `u`: replicability threshold.
+- `q`: FDR target.
+- `K`: number of groups. ParFilter_FDR will automatically partition the n studies in two K groups of approximately equal sizes.
+- `method`: Combining function for creating the local GBHPC p-values. Can be either: "Fisher", "Stouffer", or "Simes".
+- `adaptive`:  logical indicating whether to use adaptive null proportion estimates or not.
+- `cross_weights`: Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
+- `lambdas:` numeric of tuning parameters for the null proportion estimates.
 
 ### Values
-The `parfilter` returns a list that contains the rejections for the replicability analysis and the study-specific inferences.
+`ParFilter_FDR` returns a numeric of features indices to be rejected.
 
-## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
-To reproduce the simulation results in an efficient manner, we assume the reader has access to an  account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
+## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies with Side Information"
+To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
 
