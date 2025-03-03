@@ -37,7 +37,7 @@ print(Rejections)
 ### Values
 `ParFilter_FDR` returns a numeric of features indices to be rejected.
 
-## How to reproduce the simulation results for "Testing for Replicating Signals across Multiple Studies with Side Information"
+## How to reproduce the simulation results in Section 4 for "Testing for Replicating Signals across Multiple Studies with Side Information"
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
