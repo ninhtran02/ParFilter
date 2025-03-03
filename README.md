@@ -1,4 +1,4 @@
-# Par-filter
+# ParFilter
  Implementation of the partial conjunction partitioning and filtering algorithm.
 
  ## Installation
