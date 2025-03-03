@@ -60,7 +60,7 @@ module load foss/2022a R/4.2.2
 
 Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
-This slurm file will be used to submit a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
+This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
 Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes. This may be useful since the simulations do take a while. Generally speaking, you can expect the simulations to finish within half a day or so.
 
@@ -86,7 +86,7 @@ done
 done
 
 ```
-This slurm file will be used to execute the simulation under every explored parameter setting of `xcoef`, `mu`, and `u_n`.
+This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`.
 
 4. In your HPC account, change your current directory to the "Paper Simulations" folder using the "cd" command:
 ```
