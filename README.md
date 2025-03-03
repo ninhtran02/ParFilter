@@ -48,19 +48,19 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 #SBATCH --job-name=REP
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --mem=10000
-#SBATCH --time=00-60:00:00
+#SBATCH --mem=5000
+#SBATCH --time=00-24:00:00
 
-rho=$1
+xcoef=$1
 mu=$2
-setup=$3
+u_n=$3
 
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain.R $rho $mu $setup
-
+Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
+Feel free to edit the #SBATCH commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes.
 
 Furthermore, create a slurm file called *batch_submission_Repmain.slurm* as follows:
 ```
