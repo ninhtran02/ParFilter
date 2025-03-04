@@ -37,4 +37,6 @@ print(Rejections)
 ### Values
 `ParFilter_FDR` returns a numeric of features indices to be rejected.
 
-## Reproducing the numerica results in "Testing for Replicating Signals across Multiple Studies with Side Information"
+## Reproducing the numerical results in "Testing for Replicating Signals across Multiple Studies with Side Information"
+
+Steps for reproducing the results in Section 4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
