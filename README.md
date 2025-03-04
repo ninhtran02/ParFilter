@@ -39,9 +39,9 @@ print(Rejections)
 
 ## Reproducing the numerical results in "Testing for Replicating Signals across Multiple Studies with Side Information"
 
-Steps for reproducing the results in Section 4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
-Steps for reproducing the results in Section 5 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
-Steps for reproducing the results in Appendix F.1 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
-Steps for reproducing the results in Appendix F.2 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
-Steps for reproducing the results in Appendix F.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
-Steps for reproducing the results in Appendix F.4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Section 4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Section 5 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Appendix F.1 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Appendix F.2 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Appendix F.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
+-Steps for reproducing the results in Appendix F.4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
