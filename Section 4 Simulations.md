@@ -3,7 +3,7 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account.
 
-2. Create a slurm file called *Repmain.slurm* as follows:
+2. Create a slurm file called `Repmain.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -25,7 +25,7 @@ This slurm file will be used as a template for submitting a simulation job to th
 
 Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
-3. Create a slurm file called *batch_submission_Repmain.slurm* as follows:
+3. Create a slurm file called `batch_submission_Repmain.slurm` as follows:
 ```
 #!/bin/bash
 
