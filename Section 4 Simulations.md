@@ -23,7 +23,7 @@ Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
-Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes. This may be useful since the simulations do take a while. Generally speaking, you can expect the simulations to finish within half a day or so.
+Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
 3. Create a slurm file called *batch_submission_Repmain.slurm* as follows:
 ```
@@ -59,6 +59,7 @@ Download *Repmain.R* in https://github.com/ninhtran02/ParFilter/tree/main/R and 
 ```
 sbatch batch_submission_Repmain.slurm
 ```
+Generally speaking, you can expect the simulations to finish within half a day or so.
 
 6. The resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*.
    
