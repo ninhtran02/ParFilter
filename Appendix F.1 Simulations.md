@@ -1,4 +1,4 @@
-# ParFilter
+[# ParFilter
  Implementation of the partial conjunction partitioning and filtering algorithm.
 
  ## Installation
@@ -10,7 +10,7 @@ devtools::install_github("ninhtran02/Parfilter")
 ```
 
  ## Usage example
- ```
+ ```https://github.com/ninhtran02/ParFilter/tree/main/Simulation
 library(ParFilter)
 m <- 5000
 n <- 4
@@ -114,3 +114,4 @@ Download the folder https://github.com/ninhtran02/ParFilter/tree/main/Real%20Dat
 
 
 
+](https://github.com/ninhtran02/ParFilter/tree/main/Simulation)
