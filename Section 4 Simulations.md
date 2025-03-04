@@ -3,7 +3,16 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 
 1. Log onto your own HPC account.
 
-2. Create a slurm file called `Repmain.slurm` as follows:
+2. In your HPC account, change your to your working directory using the "cd" command:
+```
+cd    (your own working directory)/Paper Simulations/Covariate-Assisted
+```
+3. Creating the following directories:
+```
+mkdir -p SavedData/Independence/
+```
+
+3. Create a slurm file called `Repmain.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -49,10 +58,7 @@ done
 ```
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
-4. In your HPC account, change your current directory to the "Paper Simulations" folder using the "cd" command:
-```
-cd    (your own working directory)/Paper Simulations/Covariate-Assisted
-```
+
 Download *Repmain.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
 5. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
