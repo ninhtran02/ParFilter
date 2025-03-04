@@ -1,4 +1,4 @@
-## Reproducing the simulation results in Section
+## Reproducing the simulation results in Section 4
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
