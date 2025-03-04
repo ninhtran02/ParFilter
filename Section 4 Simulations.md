@@ -64,13 +64,6 @@ sbatch batch_submission_Repmain.slurm
    
 7. To run produce the plots, download and run *Plot.R* from https://github.com/ninhtran02/ParFilter/tree/main/R.
 
-## How to reproduce the real data results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
-
-Download the folder https://github.com/ninhtran02/ParFilter/tree/main/Real%20Data and run DMD_meta_analysis.R and AIRE_meta_analysis.R to reproduce the real data results.
-
-
-
-
 
 
 
