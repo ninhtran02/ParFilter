@@ -1,43 +1,4 @@
-# ParFilter
- Implementation of the partial conjunction partitioning and filtering algorithm.
-
- ## Installation
-```
-if (!require("devtools")){
-    install.packages("devtools")
-}
-devtools::install_github("ninhtran02/Parfilter")
-```
-
- ## Usage example
- ```https://github.com/ninhtran02/ParFilter/tree/main/Simulation
-library(ParFilter)
-m <- 5000
-n <- 4
-P <- matrix(c(rnorm(19000,0),rnorm(1000,3)), nrow = m, ncol = n, byrow = TRUE)
-P <- 1 - pnorm(P)
-Rejections <- ParFilter_FDR(p_mat = P, X_list = X_list, u = 4, q = 0.05, K = 4,
-                             method = "Stouffer", adaptive = TRUE, cross_weights = FALSE,
-                             lambdas = rep(0.50,K))
-
-# Print the results
-print(Rejections)
-```
-### Arguments
-- `p_mat`: mxn matrix of p-values.
-- `X_list`: list of length n, containing the covariates for each study.
-- `u`: replicability threshold.
-- `q`: FDR target.
-- `K`: number of groups. ParFilter_FDR will automatically partition the n studies in two K groups of approximately equal sizes.
-- `method`: Combining function for creating the local GBHPC p-values. Can be either: "Fisher", "Stouffer", or "Simes".
-- `adaptive`:  logical indicating whether to use adaptive null proportion estimates or not.
-- `cross_weights`: Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
-- `lambdas:` numeric of tuning parameters for the null proportion estimates.
-
-### Values
-`ParFilter_FDR` returns a numeric of features indices to be rejected.
-
-## Reproducing the simulation results in Section 4 for "Testing for Replicating Signals across Multiple Studies with Side Information"
+# Reproducing the simulation results in Section 4
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
@@ -62,7 +23,7 @@ Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
-Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when your simulation finishes. This may be useful since the simulations do take a while. Generally speaking, you can expect the simulations to finish within half a day or so.
+Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
 3. Create a slurm file called *batch_submission_Repmain.slurm* as follows:
 ```
@@ -98,20 +59,13 @@ Download *Repmain.R* in https://github.com/ninhtran02/ParFilter/tree/main/R and 
 ```
 sbatch batch_submission_Repmain.slurm
 ```
+Generally speaking, you can expect the simulations to finish within half a day or so.
 
 6. The resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*.
    
 7. To run produce the plots, download and run *Plot.R* from https://github.com/ninhtran02/ParFilter/tree/main/R.
 
-## How to reproduce the real data results for "Testing for Replicating Signals across Multiple Studies via Partioning and Filtering"
-
-Download the folder https://github.com/ninhtran02/ParFilter/tree/main/Real%20Data and run DMD_meta_analysis.R and AIRE_meta_analysis.R to reproduce the real data results.
 
 
 
 
-
-
-
-
-](https://github.com/ninhtran02/ParFilter/tree/main/Simulation)
