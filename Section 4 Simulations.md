@@ -53,7 +53,7 @@ This slurm file will be used to submit a simulation job to the HPC under every c
 ```
 cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
-Download *Repmain.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations" folder. 
+Download *Repmain.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
 5. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
@@ -61,7 +61,7 @@ sbatch batch_submission_Repmain.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence*.
    
 7. To run produce the plots, download and run *Plot.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
