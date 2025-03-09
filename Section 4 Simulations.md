@@ -7,7 +7,7 @@ To reproduce the simulation results in an efficient manner, we assume the reader
 ```
 cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
-3. Creating the following directories:
+3. Create the following directories in your working directory:
 ```
 mkdir -p SavedData/Independence/
 ```
