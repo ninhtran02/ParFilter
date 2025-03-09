@@ -29,9 +29,9 @@ print(Rejections)
 - `u`: replicability threshold.
 - `q`: FDR target.
 - `K`: number of groups. ParFilter_FDR will automatically partition the n studies in two K groups of approximately equal sizes.
-- `method`: Combining function for creating the local GBHPC p-values. Can be either: "Fisher", "Stouffer", or "Simes".
+- `method`: combining function for creating the local GBHPC p-values. Can be either: "Fisher", "Stouffer", or "Simes".
 - `adaptive`:  logical indicating whether to use adaptive null proportion estimates or not.
-- `cross_weights`: Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
+- `cross_weights`: set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
 - `lambdas:` numeric of tuning parameters for the null proportion estimates.
 
 ### Values
