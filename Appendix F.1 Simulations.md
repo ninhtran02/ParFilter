@@ -1,9 +1,18 @@
-# Reproducing the simulation results in Section 4
+# Reproducing the simulation results in Appendix F.1
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
 
-2. Create a slurm file called *Repmain.slurm* as follows:
+2. In your HPC account, change your to your working directory using the "cd" command:
+```
+cd    (your own working directory)/Paper Simulations/Covariate-Assisted
+```
+3. Create the following directories in your working directory:
+```
+mkdir -p SavedData/Independence_uleqn/
+```
+
+3. Create a slurm file called `Repmain_uleqn.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -19,13 +28,13 @@ u_n=$3
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain.R $xcoef $mu $u_n
+Rscript --vanilla Repmain_uleqn.R $xcoef $mu $u_n
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
 Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
-3. Create a slurm file called *batch_submission_Repmain.slurm* as follows:
+3. Create a slurm file called `batch_submission_Repmain.slurm` as follows:
 ```
 #!/bin/bash
 
@@ -38,7 +47,7 @@ do
 for u_n in {1..8}
 do
 
-sbatch Repmain.slurm $xcoef $mu $u_n
+sbatch Repmain_uleq_n.slurm $xcoef $mu $u_n
 
 done
 
@@ -49,11 +58,8 @@ done
 ```
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
-4. In your HPC account, change your current directory to the "Paper Simulations" folder using the "cd" command:
-```
-cd    (your own working directory)/Paper Simulations/Covariate-Assisted
-```
-Download *Repmain.R* in https://github.com/ninhtran02/ParFilter/tree/main/R and place it in the "Paper Simulations" folder. 
+
+Download *Repmain.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
 5. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
@@ -61,9 +67,9 @@ sbatch batch_submission_Repmain.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/SavedData/Independence*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence_uleqn*.
    
-7. To run produce the plots, download and run *Plot.R* from https://github.com/ninhtran02/ParFilter/tree/main/R.
+7. To run produce the plots, download and run *Plot_uleqn.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
