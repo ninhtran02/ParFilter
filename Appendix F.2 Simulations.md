@@ -9,7 +9,7 @@ cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
 3. Create the following directories in your working directory:
 ```
-mkdir -p SavedData/Independence_dep/
+mkdir -p SavedData/NegativeDependence/
 ```
 
 3. Create a slurm file called `Repmain_dep.slurm` as follows:
@@ -67,7 +67,7 @@ sbatch batch_submission_Repmain_dep.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence_dep*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/NegativeDependence*.
    
 7. To run produce the plots, download and run *Plot_dep.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
