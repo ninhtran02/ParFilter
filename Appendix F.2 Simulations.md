@@ -69,7 +69,7 @@ Generally speaking, you can expect the simulations to finish within half a day o
 
 6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/NegativeDependence*.
    
-7. To run produce the plots, download and run *Plot_dep.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
+7. To produce the plots, download and run *Plot_dep.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
