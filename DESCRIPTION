@@ -8,8 +8,9 @@ Description: An implementation of the partial conjunction partitioning and filte
 License: GNU GPL
 Encoding: UTF-8
 LazyData: true
-Imports: 
-    partition
-RoxygenNote: 7.3.1
+Imports:
+    CAMT
+Remotes: jchen1981/CAMT
+RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)

@@ -19,11 +19,16 @@ if (!require("CAMT", quietly = TRUE)){
 if (!require("adaFilter", quietly = TRUE)){
   devtools::install_github("jingshuw/adaFilter")
 }
+if (!require("repfdr", quietly = TRUE)){
+  install.packages("repfdr")
+}
 library(IHW)
 library(adaptMT)
 library(CAMT)
 library(adaFilter)
-source("Data and Oracle.R")
+library(repfdr)
+
+source("Data and Oracle z.R")
 source("ParFilter functions.R")  
 
 cmd_args <- commandArgs(TRUE)
@@ -32,10 +37,10 @@ xcoef_index = as.numeric(cmd_args[1])
 mu_index = as.numeric(cmd_args[2])
 u_n_index = as.numeric(cmd_args[3])
 
-nsims <- 500
+nsims <- 200
 
 xcoef_options <- c(0, 1.0, 1.5)
-mu_options <- c(0.74, 0.76, 0.78, 0.80, 0.82)
+mu_options <- c(2.0, 2.2, 2.4, 2.6, 2.8)
 u_n_options <- list(c(2,2),c(2,3),c(3,3),c(3,4),c(4,4),c(3,5),c(4,5),c(5,5))
 
 xcoef <- xcoef_options[xcoef_index]
@@ -47,13 +52,13 @@ n <- u_n[2]
 print(c(xcoef,mu,u,n))
 
 methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
-             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle")
+             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle", "repfdr")
 
-rho <- 0
+rho <- 0.8
 
 if(rho != 0){
   methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
-               "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Inflated-ParFilter")
+               "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "PRDS-ParFilter", "repfdr")
 }
 
 FDR_list <- rep(list(0), length(methods))
@@ -111,6 +116,21 @@ for(iter in 1:nsims){
         K <- 2
       }
       R_set <- ParFilter_FDR(p_mat = p_mat, X_list = X_list, u = u, q = q/sum(1/(1:m)), K = K,
+                             method = "Stouffer", adaptive = FALSE, cross_weights = TRUE,
+                             lambdas = rep(0.50,K))
+      rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
+      FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
+      TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
+    }
+    
+    if(method == "PRDS-ParFilter"){
+      if(u == n){
+        K <- u
+      }
+      if(u < n){
+        K <- 2
+      }
+      R_set <- ParFilter_FDR(p_mat = p_mat, X_list = X_list, u = u, q = q, K = K,
                              method = "Stouffer", adaptive = FALSE, cross_weights = TRUE,
                              lambdas = rep(0.50,K))
       rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
@@ -185,11 +205,11 @@ for(iter in 1:nsims){
 
 ##
 if(rho == 0){
-  file.name <- paste("Independence/","mu",mu,"setup",u,n,"xcoef",xcoef,".RD",sep = "")
+  file.name <- paste("Independencez/","mu",mu,"setup",u,n,"xcoef",xcoef,".RD",sep = "")
 } else if(rho > 0){
-  file.name <- paste("PositiveDependence/","mu",mu,"setup","xcoef",xcoef,u,n,".RD",sep = "")
+  file.name <- paste("PositiveDependencez/","mu",mu,"setup","xcoef",xcoef,u,n,".RD",sep = "")
 } else if(rho < 0){
-  file.name <- paste("NegativeDependence/","mu",mu,"setup","xcoef",xcoef,u,n,".RD",sep = "")
+  file.name <- paste("NegativeDependencez/","mu",mu,"setup","xcoef",xcoef,u,n,".RD",sep = "")
 }
 save(FDR_list, TPR_list, file = file.name)
 

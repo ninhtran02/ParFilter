@@ -49,7 +49,7 @@ print(c(xcoef,mu,u,n))
 methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
              "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle")
 
-rho <- 0
+rho <- -0.8
 
 if(rho != 0){
   methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
