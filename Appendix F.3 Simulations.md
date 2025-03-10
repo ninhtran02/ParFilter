@@ -9,7 +9,7 @@ cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
 3. Create the following directories in your working directory:
 ```
-mkdir -p SavedData/Independence_z/
+mkdir -p SavedData/Independencez/
 ```
 
 3. Create a slurm file called `Repmain_z.slurm` as follows:
@@ -67,7 +67,7 @@ sbatch batch_submission_Repmain_z.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence_z*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independencez*.
    
 7. To run produce the plots, download and run *Plot_z.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
