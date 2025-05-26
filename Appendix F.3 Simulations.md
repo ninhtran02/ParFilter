@@ -67,7 +67,7 @@ sbatch batch_submission_Repmain_dep.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independencez*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/NegativeDependence.
    
 7. To produce the plots, download and run *Plot dep full.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
