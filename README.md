@@ -16,10 +16,9 @@ m <- 5000
 n <- 4
 P <- matrix(c(rnorm(19000,0),rnorm(1000,3)), nrow = m, ncol = n, byrow = TRUE)
 P <- 1 - pnorm(P)
-X_list <- rep(list(rnorm(n = m)),n)
 Rejections <- ParFilter_FDR(p_mat = P, X_list = X_list, u = 4, q = 0.05, K = 4,
-                            method = "Stouffer", adaptive = TRUE, cross_weights = FALSE,
-                            lambdas = rep(0.50,4))
+                             method = "Stouffer", adaptive = TRUE, cross_weights = FALSE,
+                             lambdas = rep(0.50,K))
 
 # Print the results
 print(Rejections)

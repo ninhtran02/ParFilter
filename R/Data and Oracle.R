@@ -132,6 +132,30 @@ BH_procedure <- function(p_mat, u, q, method = "Stouffer"){
   return(R_set)
 }
 
+# Adaptive-BH procedure
+Adaptive_BH_procedure <- function(p_mat, u, q, method = "Stouffer"){
+  
+  if(method == "Stouffer"){
+    p_values <- apply(X = p_mat, MARGIN = 1, FUN = stouffer_fun, u = u)
+  }
+  if(method == "Fisher"){
+    p_values <- apply(X = p_mat, MARGIN = 1, FUN = fisher_fun, u = u)
+  }
+  if(method == "Simes"){
+    p_values <- apply(X = p_mat, MARGIN = 1, FUN = simes_fun, u = u)
+  }
+  
+  lambda <- 0.5
+  m <- length(p_values)
+  pi_hat <- (1 + sum(p_values > lambda))/(m*(1-lambda))
+  rej.index <- max(which(sort(p_values) < (1:m)*q/(m * pi_hat)))
+  if(length(rej.index) == 0){
+    return(rej.index)
+  }
+  R_set <- which(p_values <= sort(p_values)[rej.index])
+  return(R_set)
+}
+
 # CAMT procedure
 CAMT_procedure <- function(p_mat, X_mat, u, q, method = "Stouffer"){
   
@@ -193,19 +217,19 @@ IHW_procedure <- function(p_mat, X_mat, u, q, method = "Stouffer"){
   return(R_set)
 }
 
-repfdr_procedure <- function(z_mat, u, q){
-  
-  input.to.repfdr3 <- repfdr::ztobins(zmat = z_mat, n.association.status = 2)
-  pbz <- input.to.repfdr3$pdf.binned.z
-  bz <- input.to.repfdr3$binned.z.mat
-  H <- repfdr::hconfigs(n, n.association.status = 2, studies.names = NULL)
-  
-  output.rep <- repfdr::repfdr(pbz, bz, non.null = "user.defined", non.null.rows = which(rowSums(H) >= u))
-  BayesFdr.rep <- output.rep$mat[,"Fdr"]
-  Rej <- (BayesFdr.rep <= q)
-  R_set <- which(Rej)
-  return(R_set)
-}
+#repfdr_procedure <- function(z_mat, u, q){
+#  
+#  input.to.repfdr3 <- repfdr::ztobins(zmat = z_mat, n.association.status = 2)
+#  pbz <- input.to.repfdr3$pdf.binned.z
+#  bz <- input.to.repfdr3$binned.z.mat
+#  H <- repfdr::hconfigs(n, n.association.status = 2, studies.names = NULL)
+#  
+#  output.rep <- repfdr::repfdr(pbz, bz, non.null = "user.defined", non.null.rows = which(rowSums(H) >= u))
+#  BayesFdr.rep <- output.rep$mat[,"Fdr"]
+#  Rej <- (BayesFdr.rep <= q)
+#  R_set <- which(Rej)
+#  return(R_set)
+#}
 
 
 # Compute FDP and TPP
