@@ -28,7 +28,7 @@ u_n=$3
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain_z.R $xcoef $mu $u_n
+Rscript --vanilla Repmain_dep.R $xcoef $mu $u_n
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
@@ -63,7 +63,7 @@ Download *Repmain_z.R* from [here](https://github.com/ninhtran02/ParFilter/tree/
 
 5. To submit the jobs, run the file *batch\_submission\_Repmain_dep.slurm* with the command:
 ```
-sbatch batch_submission_Repmain_z.slurm
+sbatch batch_submission_Repmain_dep.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
