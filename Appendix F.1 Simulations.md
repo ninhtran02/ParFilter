@@ -28,7 +28,7 @@ u_n=$3
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain_z.R $xcoef $mu $u_n
+Rscript --vanilla Repmain.R $xcoef $mu $u_n
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
