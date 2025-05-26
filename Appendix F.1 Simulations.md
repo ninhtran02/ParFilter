@@ -63,7 +63,7 @@ Download *Repmain.R* from [here](https://github.com/ninhtran02/ParFilter/tree/ma
 
 5. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
 ```
-sbatch batch_submission_Repmain_z.slurm
+sbatch batch_submission_Repmain.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
