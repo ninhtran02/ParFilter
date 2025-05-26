@@ -47,7 +47,7 @@ do
 for u_n in {1..8}
 do
 
-sbatch Repmain_z.slurm $xcoef $mu $u_n
+sbatch Repmain_dep.slurm $xcoef $mu $u_n
 
 done
 
