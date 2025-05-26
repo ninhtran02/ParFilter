@@ -9,10 +9,10 @@ cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
 3. Create the following directories in your working directory:
 ```
-mkdir -p SavedData/Independencez/
+mkdir -p SavedData/NegativeDependence/
 ```
 
-3. Create a slurm file called `Repmain_z.slurm` as follows:
+3. Create a slurm file called `Repmain_dep.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -34,7 +34,7 @@ This slurm file will be used as a template for submitting a simulation job to th
 
 Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
-3. Create a slurm file called `batch_submission_Repmain_z.slurm` as follows:
+3. Create a slurm file called `batch_submission_Repmain_dep.slurm` as follows:
 ```
 #!/bin/bash
 
@@ -61,7 +61,7 @@ This slurm file will be used to submit a simulation job to the HPC under every c
 
 Download *Repmain_z.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\_Repmain_z.slurm* with the command:
+5. To submit the jobs, run the file *batch\_submission\_Repmain_dep.slurm* with the command:
 ```
 sbatch batch_submission_Repmain_z.slurm
 ```
@@ -69,7 +69,7 @@ Generally speaking, you can expect the simulations to finish within half a day o
 
 6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independencez*.
    
-7. To produce the plots, download and run *Plot_z.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
+7. To produce the plots, download and run *Plot dep full.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
