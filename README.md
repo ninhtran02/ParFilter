@@ -19,7 +19,7 @@ P <- 1 - pnorm(P)
 X_list <- lapply(1:4, function(x) rnorm(5000)) # Non-informative covariates
 Rejections <- ParFilter_FDR(p_mat = P, X_list = X_list, u = 4, q = 0.05, K = 4,
                              method = "Stouffer", adaptive = TRUE, cross_weights = FALSE,
-                             lambdas = rep(0.50,K))
+                             lambdas = rep(0.50,4))
 
 # Print the results
 print(Rejections)
