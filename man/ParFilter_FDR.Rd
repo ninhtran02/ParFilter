@@ -2,7 +2,7 @@
 % Please edit documentation in R/ParFilter functions.R
 \name{ParFilter_FDR}
 \alias{ParFilter_FDR}
-\title{ParFilter}
+\title{Title}
 \usage{
 ParFilter_FDR(
   p_mat,
@@ -13,31 +13,34 @@ ParFilter_FDR(
   method,
   adaptive = TRUE,
   lambdas = rep(0.5, K),
-  cross_weights = FALSE
+  cross_weights = FALSE,
+  inflate = FALSE
 )
 }
 \arguments{
-\item{p_mat}{mxn matrix of p-values.}
+\item{p_mat}{mxn matrix of p-values}
 
-\item{X_list}{list of length n, containing the covariates for each study.}
+\item{X_list}{List of covariates (numeric of matrix) for each study}
 
-\item{u}{replicability threshold.}
+\item{u}{Replicability level}
 
-\item{q}{FDR target.}
+\item{q}{FDR target}
 
-\item{K}{number of groups. ParFilter_FDR will automatically partition the n studies in two K groups of approximately equal sizes.}
+\item{K}{Number of groups}
 
-\item{method}{combining function for creating the local GBHPC p-values. Can be either: "Fisher", "Stouffer", or "Simes".}
+\item{method}{Method for combining p-values: "Fisher", "Stouffer", or "Simes"}
 
-\item{adaptive}{logical indicating whether to use adaptive null proportion estimates or not.}
+\item{adaptive}{logical indicating whether to use adaptive weighted null proportion estimates or not}
 
-\item{lambdas}{set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.}
+\item{lambdas}{numeric of tuning parameters for the weighted null proportion estimates.}
 
-\item{cross_weights}{numeric of tuning parameters for the null proportion estimates.}
+\item{cross_weights}{Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.}
+
+\item{inflate}{Use a harmonic number as the weighted null proportion estimates.}
 }
 \value{
-returns a numeric of features indices to be rejected.
+The rejections for determining u/[n] replicability
 }
 \description{
-ParFilter
+Title
 }

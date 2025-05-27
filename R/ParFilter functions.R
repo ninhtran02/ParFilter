@@ -193,7 +193,7 @@ compute_approx_lfdr <- function(p_mat, X_list, groups,
   if(cross_weights == "naive"){
     cross_weights <- FALSE
   }
-  
+
   # Make a list of covariates (matrix) for each study
   for(j in 1:n){
     X_list[[j]] <- cbind(X_list[[j]])
@@ -248,7 +248,7 @@ compute_approx_lfdr <- function(p_mat, X_list, groups,
     k_est_mat[,j] <- 1/(1 + exp(-beta))
   }
 
-  
+
   if(cross_weights){
     p_mat_for_weights <- p_mat
     p_mat_for_weights <- -(k_est_mat*pi0_est_mat - 2*k_est_mat + 2)/(2*k_est_mat - 4)
@@ -586,6 +586,23 @@ w_vec_maker <- function(groups){
 }
 
 # ParFilter ALGORITHM
+#' Title
+#'
+#' @param p_mat mxn matrix of p-values
+#' @param X_list List of covariates (numeric of matrix) for each study
+#' @param u Replicability level
+#' @param q FDR target
+#' @param K Number of groups
+#' @param method Method for combining p-values: "Fisher", "Stouffer", or "Simes"
+#' @param adaptive logical indicating whether to use adaptive weighted null proportion estimates or not
+#' @param lambdas numeric of tuning parameters for the weighted null proportion estimates.
+#' @param cross_weights Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
+#' @param inflate Use a harmonic number as the weighted null proportion estimates.
+#'
+#' @return The rejections for determining u/[n] replicability
+#' @export
+#'
+#' @examples
 ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
                           adaptive = TRUE, lambdas = rep(0.5,K),
                           cross_weights = FALSE, inflate = FALSE){
@@ -601,6 +618,7 @@ ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
   ## adaptive: logical indicating whether to use adaptive null proportion estimates or not
   ## cross_weights: Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
   ## lambdas: numeric of tuning parameters for the null proportion estimates.
+  ## inflates: Use a harmonic number as the weighted null proportion estimates.
 
   n <- ncol(p_mat) # Number of studies
   m <- nrow(p_mat) # Number of features
@@ -616,7 +634,7 @@ ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
                                      u = u, method = method, q = q,
                                      lambdas = lambdas)
   }else{
-    print("IM HERE")
+    #print("IM HERE")
     selections <- default_selections(p_mat = p_mat, groups = groups,
                                      u = u, method = method, q = q/sum(1/(1:m)),
                                      lambdas = lambdas)
