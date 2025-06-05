@@ -2,7 +2,7 @@
 % Please edit documentation in R/ParFilter functions.R
 \name{ParFilter_FDR}
 \alias{ParFilter_FDR}
-\title{Title}
+\title{ParFilter}
 \usage{
 ParFilter_FDR(
   p_mat,
@@ -22,7 +22,7 @@ ParFilter_FDR(
 
 \item{X_list}{List of covariates (numeric of matrix) for each study}
 
-\item{u}{Replicability level}
+\item{u}{Replicability level. If u is less than the number of studies, then the local replicability levels will be determined randomly.}
 
 \item{q}{FDR target}
 
@@ -42,5 +42,5 @@ ParFilter_FDR(
 The rejections for determining u/[n] replicability
 }
 \description{
-Title
+ParFilter
 }

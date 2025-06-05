@@ -48,7 +48,7 @@ simes_fun <- function(p_vec, u){
 }
 
 # DEFAULT SELECTION RULES
-default_selections <- function(p_mat, groups, u, method, q, lambdas){
+default_selections <- function(p_mat, groups, u_groups_mat, method, q, lambdas){
   # Last edited: 22nd October 2024
 
   # Inputs
@@ -62,10 +62,11 @@ default_selections <- function(p_mat, groups, u, method, q, lambdas){
   K <- length(groups) # Number of groups
   m <- nrow(p_mat) # Number of features
   n <- ncol(p_mat) # Number of studies
+  u <- rowSums(u_groups_mat)[1]
   G_sizes <- unlist(lapply(X = groups, FUN = length)) # Group sizes
-  min_Gk <- min(G_sizes) # Smallest group size
+  #min_Gk <- min(G_sizes) # Smallest group size
   #u_bar <- max(u - n + min_Gk,1) # Local replicability levels (for selections)
-  u_bar <- pmax(4 - 5 + G_sizes,1)
+  #u_bar <- pmax(4 - 5 + G_sizes,1)
   w_vec <- G_sizes/n # Local error weights
 
   # Weights for the features
@@ -75,18 +76,22 @@ default_selections <- function(p_mat, groups, u, method, q, lambdas){
   PC_p_list <- list()
   for(k in 1:K){
     if(u == n){
-      u_bar[k] <- G_sizes[k]
-      #print(u_bar)
+      if(method == "Fisher"){
+        PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = fisher_fun, u = G_sizes[k])
+      }
+      if(method == "Stouffer"){
+        PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = stouffer_fun, u = G_sizes[k])
+      }
+      if(method == "Simes"){
+        PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = simes_fun, u = G_sizes[k])
+      }
+    } else {
+      sub_p_mat <- cbind(as.matrix(p_mat[,groups[[k]]]))
+      sub_p_mat_list <- split(sub_p_mat, row(sub_p_mat))
+      u_groups_mat_list <- as.list(u_groups_mat[,k])
+      PC_p_list[[k]] <- mapply(fisher_fun, p_vec = sub_p_mat_list, u = u_groups_mat_list)
     }
-    if(method == "Fisher"){
-      PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = fisher_fun, u = u_bar[k])
-    }
-    if(method == "Stouffer"){
-      PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = stouffer_fun, u = u_bar[k])
-    }
-    if(method == "Simes"){
-      PC_p_list[[k]] <- apply(X = cbind(as.matrix(p_mat[,groups[[k]]])), MARGIN = 1, FUN = simes_fun, u = u_bar[k])
-    }
+
   }
 
   # Threshold the the local PC p-values
@@ -107,7 +112,7 @@ default_selections <- function(p_mat, groups, u, method, q, lambdas){
 
 
 # COMPUTE LOCAL REPLICABILITY LEVELS
-u_groups_mat_maker <- function(p_mat, X_list, groups, u, lfdr_mat){
+u_groups_mat_maker <- function(groups, u, lfdr_mat){
   # Last edited: 3rd October 2024
 
   # Inputs
@@ -116,8 +121,8 @@ u_groups_mat_maker <- function(p_mat, X_list, groups, u, lfdr_mat){
   ## groups: List containing the study groupings
   ## u: Replicability level
 
-  n <- ncol(p_mat) # Number of studies
-  m <- nrow(p_mat) # Number of features
+  n <- ncol(lfdr_mat) # Number of studies
+  m <- nrow(lfdr_mat) # Number of features
   K <- length(groups) # Number of groups
 
   if(u == n){
@@ -438,71 +443,6 @@ pi0_hat_maker <- function(PC_p_list,
   return(pi0_hat_vec)
 }
 
-# COMPUTE (WEIGHTED) STOREY NULL PROPORTIONE ESTIMATE (2002)
-#pi0_hat_maker_storey_2002 <- function(PC_p_list,
-#                          selections, weights_list, lambdas){
-#  # Last edited: 3rd October 2024
-#
-#  ## Inputs:
-#  ## PC_p_list: List of PC p-values for each group
-#  ## selections: List of refined selected features for each group
-#  ## weights_list: List of weights for selected features in each group
-#  ## lambdas: Vector of hyperparameters
-#
-#  K <- length(selections) # Number of groups
-#  pi0_hat_vec <- rep(NA,K)
-#  for(k in 1:K){
-#    num_sum_index <- which(PC_p_list[[k]][selections[[k]]] > lambdas[k])
-#    numerator <- sum(weights_list[[k]][num_sum_index])
-#    denominator <- length(selections[[k]])*(1 - lambdas[k])
-#    pi0_hat_vec[k] <- numerator/denominator
-#  }
-#
-#  # Output: Vector of (post-selection) pi0 estimates
-#  return(pi0_hat_vec)
-#}
-
-# BOOSTRAP BEST VALUES FOR LAMBDAS
-#auto_lambda <-  function(PC_p_list,
-#                         selections, weights_list, q, w_vec, B = 1000){
-#  K <- length(selections)
-#  optimal_lambdas <- rep(NA, K)
-#  m <- length(PC_p_list[[1]])
-#  for(k in 1:K){
-#    lambda_options <- seq(0.05, 0.95, 0.05)
-#    pi0_hat_storey_2002_vec <- rep(NA, length(lambda_options))
-#    for(i in 1:length(lambda_options)){
-#      #pi0_hat_storey_2002_vec[i] <- pi0_hat_maker_storey_2002(PC_p_list = PC_p_list[k],
-#      #                                                        selections = selections[k],
-#      #                                                        weights_list = weights_list[k],
-#      #                                                        lambdas = lambda_options[i])
-#      unselected_indices <- setdiff(1:m,selections[[k]])
-#      pi0_hat_storey_2002_vec[i] <- sum(PC_p_list[[k]][unselected_indices] > lambda_options[i])/((1-lambda_options[i])*length(unselected_indices))
-#    }
-#    min_pi0_hat_storey_2002 <- min(pi0_hat_storey_2002_vec)
-#
-#    MSE_vec <- rep(NA, length(lambda_options))
-#    for(i in 1:length(lambda_options)){
-#      MSE <- 0
-#      for(b in 1:B){
-#        boostrap_p <- sample(x = PC_p_list[[k]][unselected_indices], size = length(unselected_indices), replace = TRUE)
-#        pi0_hat <- (1 + sum(boostrap_p > lambda_options[i]))/((1-lambda_options[i])*length(unselected_indices))
-#
-#        #pi0_hat <- pi0_hat_maker(PC_p_list = PC_p_list[k],
-#        #                         selections = selections[k],
-#        #                         weights_list = weights_list[k],
-#        #                         lambdas = lambda_options[i])
-#        MSE <- MSE + (1/B)*(pi0_hat - min_pi0_hat_storey_2002)^2
-#      }
-#      MSE_vec[i] <- MSE
-#    }
-#
-#    optimal_lambdas[k] <- lambda_options[which.min(MSE_vec)]
-#  }
-#  return(optimal_lambdas)
-#}
-
-
 # COMPUTE ParFilter REJECTION SET
 create_R <- function(PC_p_list, t_vec, selections,
                      weights_list, lambdas){
@@ -586,11 +526,11 @@ w_vec_maker <- function(groups){
 }
 
 # ParFilter ALGORITHM
-#' Title
+#' ParFilter
 #'
 #' @param p_mat mxn matrix of p-values
 #' @param X_list List of covariates (numeric of matrix) for each study
-#' @param u Replicability level
+#' @param u Replicability level. If u is less than the number of studies, then the local replicability levels will be determined randomly.
 #' @param q FDR target
 #' @param K Number of groups
 #' @param method Method for combining p-values: "Fisher", "Stouffer", or "Simes"
@@ -618,7 +558,6 @@ ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
   ## adaptive: logical indicating whether to use adaptive null proportion estimates or not
   ## cross_weights: Set as TRUE if the p-values are dependent within studies, otherwise leave it as FALSE.
   ## lambdas: numeric of tuning parameters for the null proportion estimates.
-  ## inflates: Use a harmonic number as the weighted null proportion estimates.
 
   n <- ncol(p_mat) # Number of studies
   m <- nrow(p_mat) # Number of features
@@ -628,15 +567,24 @@ ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
   w_vec <- w_vec_maker(groups)
   #print(w_vec)
 
+  # Make u_groups_mat
+  if(u < n){
+    weights_for_u <- matrix(data = runif(n = m*n, min = 0, max = 1), nrow = m, ncol = n)
+  } else {
+    weights_for_u <- matrix(data = rep(x = 0.5, m*n), nrow = m, ncol = n)
+  }
+  u_groups_mat <- u_groups_mat_maker(groups = groups, u = u,
+                                     lfdr_mat = weights_for_u)
+
   # Form the selection rules
   if(!inflate){
     selections <- default_selections(p_mat = p_mat, groups = groups,
-                                     u = u, method = method, q = q,
+                                     u_groups_mat = u_groups_mat, method = method, q = q,
                                      lambdas = lambdas)
   }else{
     #print("IM HERE")
     selections <- default_selections(p_mat = p_mat, groups = groups,
-                                     u = u, method = method, q = q/sum(1/(1:m)),
+                                     u_groups_mat = u_groups_mat, method = method, q = q/sum(1/(1:m)),
                                      lambdas = lambdas)
   }
 
@@ -653,10 +601,6 @@ ParFilter_FDR <- function(p_mat, X_list, u, q, K, method,
   lfdr_mat <- lfdr_obj$lfdr_mat
 
   # Make u_groups_mat
-  u_random_weights <- matrix(data = runif(n = m*n, min = 0, max = 1), nrow = m, ncol = n)
-  u_groups_mat <- u_groups_mat_maker(p_mat = p_mat, X_list = X_list,
-                                     groups = groups, u = u,
-                                     lfdr_mat = lfdr_mat)
 
   # Form the weights
   if(cross_weights == "naive"){
