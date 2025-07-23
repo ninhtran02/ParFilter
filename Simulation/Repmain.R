@@ -46,9 +46,10 @@ print(c(xcoef,mu,u,n))
 
 methods <- c("Non-adaptive-ParFilter", "Adaptive-BH",
              "Inflated-ParFilter", "BY", "ParFilter", "BH", "Inflated-AdaFilter-BH",
-             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle")
+             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle", "CoFilter-BH", "Adaptive-CoFilter-BH", 
+             "Naive-ParFilter")
 
-rho <- 0.0
+rho <- -0.8
 
 if(rho != 0){
   #methods <- c("ParFilter", "BY", "Inflated-AdaFilter-BH",
@@ -56,7 +57,8 @@ if(rho != 0){
   methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
                "AdaFilter-BH", "CAMT", "AdaPT", "IHW", 
                "Non-adaptive-ParFilter", "Adaptive-BH",
-               "Inflated-ParFilter", "BY")
+               "Inflated-ParFilter", "BY", "CoFilter-BH", "Adaptive-CoFilter-BH",
+               "Naive-ParFilter")
 }
 
 FDR_list <- rep(list(0), length(methods))
@@ -120,6 +122,21 @@ for(iter in 1:nsims){
       FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
       TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
     }
+    
+    if(method == "Naive-ParFilter"){
+      if(u == n){
+        K <- u
+      }
+      if(u < n){
+        K <- 2
+      }
+      R_set <- ParFilter_FDR(p_mat = p_mat, X_list = X_list, u = u, q = q, K = K,
+                             method = "Stouffer", adaptive = TRUE, cross_weights = "naive",
+                             lambdas = rep(0.5,K), inflate = FALSE)
+      rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
+      FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
+      TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
+    }
 
     if(method == "Inflated-ParFilter"){
       if(u == n){
@@ -165,6 +182,20 @@ for(iter in 1:nsims){
       TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
     }
     
+    if(method == "CoFilter-BH"){ 
+      R_set <- CoFilter_procedure(p_mat = p_mat, u = u, q = q)
+      rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
+      FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
+      TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
+    }
+    
+    if(method == "Adaptive-CoFilter-BH"){ 
+      R_set <- Adaptive_CoFilter_procedure(p_mat = p_mat, u = u, q = q)
+      rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
+      FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
+      TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
+    }
+    
     if(method == "Adaptive-BH"){
       R_set <- Adaptive_BH_procedure(p_mat = p_mat, u = u, q = q)
       rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
@@ -173,7 +204,7 @@ for(iter in 1:nsims){
     }
     
     if(method == "BY"){
-      R_set <- BH_procedure(p_mat = p_mat, u = u, q = q/sum(1/(1:5000)) )
+      R_set <- BH_procedure(p_mat = p_mat, u = u, q = q/sum(1/(1:m)) )
       rates <- compute_fdp_tpp(rejections = R_set, H = meta_study$H_mat, u = u)
       FDR_list[[method]] <- FDR_list[[method]] + rates$fdp/nsims
       TPR_list[[method]] <- TPR_list[[method]] + rates$tpp/nsims
