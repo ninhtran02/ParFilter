@@ -1,5 +1,5 @@
-# Reproducing the simulation results in Appendix E
-To reproduce the Figure E.1, run the following R code below:
+# Reproducing the simulation results in Appendix D
+To reproduce the Figure D.1, run the following R code below:
 ```
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
   install.packages("ggplot2")
