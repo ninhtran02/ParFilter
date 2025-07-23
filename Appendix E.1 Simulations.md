@@ -1,4 +1,4 @@
-# Reproducing the simulation results in Appendix F.1
+# Reproducing the simulation results in Appendix E.1
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
@@ -69,7 +69,7 @@ Generally speaking, you can expect the simulations to finish within half a day o
 
 6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence*.
    
-7. To produce the plots, download and run *Plot full.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
+7. To produce the plots, download and run *Plot full with CoFilter.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
