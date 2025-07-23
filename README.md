@@ -42,7 +42,7 @@ print(Rejections)
 
 - Steps for reproducing the results in Section 4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%204%20Simulations.md).
 - Steps for reproducing the results in Section 5 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Section%205%20Case%20Study.md).
-- Steps for reproducing the results in Appendix D can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20F.1%20Simulations.md)
-- Steps for reproducing the results in Appendix E.1 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20F.1%20Simulations.md).
-- Steps for reproducing the results in Appendix E.2 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20F.2%20Simulations.md).
-- Steps for reproducing the results in Appendix E.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20F.3%20Simulations.md).
+- Steps for reproducing the results in Appendix D can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20D%20simulations.md)
+- Steps for reproducing the results in Appendix E.1 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.1%20Simulations.md).
+- Steps for reproducing the results in Appendix E.2 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.2%20Simulations.md).
+- Steps for reproducing the results in Appendix E.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.3%20Simulations.md).
