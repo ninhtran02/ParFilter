@@ -1,5 +1,7 @@
 #  Reproducing the real data results in Section 5
 
+Download and run the R script **Competing Methods.R** from [here](https://github.com/ninhtran02/ParFilter/tree/main/Real%20Data/). Make sure that the ParFilter R package is installed.
+
 ## Section 5.1
 1. To obtain the microarray data for the DSSIC case study, download and run the R script **GSE34553_DSS.R** and **GSE35651_DSS.R** from [here](https://github.com/ninhtran02/ParFilter/tree/main/Real%20Data/DSSIC).
    
