@@ -9,10 +9,10 @@ cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
 3. Create the following directories in your working directory:
 ```
-mkdir -p SavedData/Independence/
+mkdir -p SavedData/PF
 ```
 
-3. Create a slurm file called `Repmain_uleqn.slurm` as follows:
+3. Create a slurm file called `Repmain_PF.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -24,21 +24,23 @@ mkdir -p SavedData/Independence/
 xcoef=$1
 mu=$2
 u_n=$3
+paral=$4
 
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain_uleqn.R $xcoef $mu $u_n
+Rscript --vanilla Repmain_PF.R $xcoef $mu $u_n $paral
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
 Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
-3. Create a slurm file called `batch_submission_Repmain.slurm` as follows:
+3. Create a slurm file called `batch_submission_Repmain_PF.slurm` as follows:
 ```
 #!/bin/bash
+#SBATCH --mail-user=$ninht@student.unimelb.edu.au
 
-for xcoef in {1..3}
+for pi1pi1 in {1..3}
 do
 
 for mu in {1..5}
@@ -47,7 +49,12 @@ do
 for u_n in {1..8}
 do
 
-sbatch Repmain_uleqn.slurm $xcoef $mu $u_n
+for paral in {1..50}
+do
+
+sbatch Repmain_PF.slurm $pi1pi1 $mu $u_n $paral
+
+done
 
 done
 
@@ -61,15 +68,15 @@ This slurm file will be used to submit a simulation job to the HPC under every c
 
 Download *Repmain_uleqn.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\_Repmain.slurm* with the command:
+5. To submit the jobs, run the file *batch\_submission\_Repmain_PF.slurm* with the command:
 ```
-sbatch batch_submission_Repmain.slurm
+sbatch batch_submission_Repmain_PF.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/PF*.
    
-7. To produce the plots, download and run *Plot full with CoFilter.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
+7. To produce the plots, download and run *Plot PF.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
