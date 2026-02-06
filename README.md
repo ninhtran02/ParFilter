@@ -27,7 +27,7 @@ print(Rejections)
 - `u`: replicability threshold.
 - `X_list`: list of length n, containing the covariates for each study.
 - `K`: number of groups. ParFilter_FDR will automatically partition the n studies in two K groups of approximately equal sizes.
-- `direction`: If u < n and covariates are univariate, the set `direction = negative` if the smaller the covariate, the more likely its corresponding base null is false, and set `direction = positive` if the larger the covariate, the more likely its corresponding base null is false.
+- `direction`: If u < n and covariates are univariate, set `direction = negative` if the smaller the covariate, the more likely its corresponding base null is false, and set `direction = positive` if the larger the covariate, the more likely its corresponding base null is false.
 - `q`: FDR target.
 - `inflate`:  logical indicating whether to inflate the null proportion estimate to account for dependence among base p-values.
 - `lambda_vec:` numeric of tuning parameters for the null proportion estimates.
