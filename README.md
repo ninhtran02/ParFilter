@@ -46,4 +46,4 @@ print(Rejections)
 - Steps for reproducing the results in Appendix E.1 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.1%20Simulations.md).
 - Steps for reproducing the results in Appendix E.2 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.2%20Simulations.md).
 - Steps for reproducing the results in Appendix E.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.3%20Simulations.md).
-- Steps for reproducing the results in Appendix E.3 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.4%20Simulations.md).
+- Steps for reproducing the results in Appendix E.4 can be found [here](https://github.com/ninhtran02/ParFilter/blob/main/Appendix%20E.4%20Simulations.md).
