@@ -1,27 +1,39 @@
-setwd("~/Library/CloudStorage/GoogleDrive-ninhtran021998@gmail.com/My Drive/PhD/Replicability/Paper Simulations/Covariate-Assisted")
 library(ggplot2)
 library(latex2exp)
 library(ggpubr)
-xcoef_options <- c(0, 1, 1.5)
+xcoef_options <- c(0.0, 1.0, 1.5)
 mu_options <- c(0.74, 0.76, 0.78, 0.80, 0.82)
 u_n_options <- list(c(2,2),c(2,3),c(3,3),c(3,4),c(4,4),c(3,5),c(4,5),c(5,5))
+paral_options <- 1:50
 methods <- c("Non-adaptive-ParFilter", "Adaptive-BH",
              "Inflated-ParFilter", "BY", "ParFilter", "BH", "Inflated-AdaFilter-BH",
-             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "Oracle", "CoFilter-BH", "Adaptive-CoFilter-BH", 
+             "AdaFilter-BH", "CAMT", "AdaPT", "IHW", "CoFilter-BH", "Adaptive-CoFilter-BH",
              "Naive-ParFilter")
+
 
 FDR_dat <- data.frame()
 TPR_dat <- data.frame()
 for(xcoef in xcoef_options){
   for(mu in mu_options){
     for(u_n in u_n_options){
+      paral <- 1
       u <- u_n[1]
       n <- u_n[2]
-      file.name <- paste("Independence/With CoFilter and Naive ParFilter/","mu",mu,"setup",u,n,"xcoef",xcoef,".RD",sep = "")
+      file.name <- paste("Independence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
       load(file = file.name)
       fdr_dat <- cbind.data.frame(reshape2::melt(FDR_list),xcoef,mu,paste(u,n, sep = ""))
-      FDR_dat <- rbind.data.frame(FDR_dat,fdr_dat)
       tpr_dat <- cbind.data.frame(reshape2::melt(TPR_list),xcoef,mu,paste(u,n, sep = ""))
+      fdr_dat$value <- 0
+      tpr_dat$value <- 0
+      for(paral in paral_options){
+        u <- u_n[1]
+        n <- u_n[2]
+        file.name <- paste("Independence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
+        load(file = file.name)
+        fdr_dat$value <- fdr_dat$value + cbind.data.frame(reshape2::melt(FDR_list),xcoef,mu,paste(u,n, sep = ""))$value/max(paral_options)
+        tpr_dat$value <- tpr_dat$value + cbind.data.frame(reshape2::melt(TPR_list),xcoef,mu,paste(u,n, sep = ""))$value/max(paral_options)
+      }
+      FDR_dat <- rbind.data.frame(FDR_dat,fdr_dat)
       TPR_dat <- rbind.data.frame(TPR_dat,tpr_dat)
     }
   }
@@ -29,6 +41,8 @@ for(xcoef in xcoef_options){
 
 names(FDR_dat) <- c("FDR", "Methods", "xcoef", "mu", "un")
 names(TPR_dat) <- c("TPR", "Methods", "xcoef", "mu", "un")
+
+q <- 0.05
 
 FDR_dat$xcoef <- as.factor(x = FDR_dat$xcoef)
 levels(FDR_dat$xcoef) <- c("Non-informative~(gamma[1] == 0)",
@@ -46,16 +60,16 @@ levels(FDR_dat$un) <- c("2 / '['*2*']'",
                         "5 / '['*5*']'")
 
 FDR_dat$Methods <- as.factor(x = FDR_dat$Methods)
-levels(FDR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH", 
+levels(FDR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
                              "Adaptive-CoFilter-BH",
-                             "BH", "BY", "CAMT", 
+                             "BH", "BY", "CAMT",
                              "CoFilter-BH",
                              "IHW", "Inflated-AdaFilter-BH",
                              "Inflated-ParFilter",
                              "No-Covar-ParFilter",
-                             "Non-adaptive-ParFilter", "Oracle", "ParFilter")
+                             "Non-adaptive-ParFilter", "ParFilter")
 FDR_dat$Methods <- factor(FDR_dat$Methods, levels = c("ParFilter", "BH", "BY", "No-Covar-ParFilter", "AdaPT", "Adaptive-CoFilter-BH", "AdaFilter-BH",  "CAMT", "Inflated-ParFilter",
-                                                      "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH", "Oracle"))
+                                                      "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH"))
 
 TPR_dat$xcoef <- as.factor(x = TPR_dat$xcoef)
 levels(TPR_dat$xcoef) <- c("Non-informative~(gamma[1] == 0)",
@@ -73,20 +87,20 @@ levels(TPR_dat$un) <- c("2 / '['*2*']'",
                         "5 / '['*5*']'")
 
 TPR_dat$Methods <- as.factor(x = TPR_dat$Methods)
-levels(TPR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH", 
+levels(TPR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
                              "Adaptive-CoFilter-BH",
-                             "BH", "BY", "CAMT", 
+                             "BH", "BY", "CAMT",
                              "CoFilter-BH",
                              "IHW", "Inflated-AdaFilter-BH",
                              "Inflated-ParFilter",
                              "No-Covar-ParFilter",
-                             "Non-adaptive-ParFilter", "Oracle", "ParFilter")
+                             "Non-adaptive-ParFilter", "ParFilter")
 TPR_dat$Methods <- factor(TPR_dat$Methods, levels = c("ParFilter", "BH", "BY", "No-Covar-ParFilter", "AdaPT", "Adaptive-CoFilter-BH", "AdaFilter-BH",  "CAMT", "Inflated-ParFilter",
-                                                      "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH", "Oracle"))
+                                                      "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH"))
 
-FDR_dat <- FDR_dat[ !(FDR_dat$Methods %in% c("Adaptive-BH", "BY", "Adaptive-CoFilter-BH", "Oracle",
+FDR_dat <- FDR_dat[ !(FDR_dat$Methods %in% c("Adaptive-BH", "BY", "Adaptive-CoFilter-BH",
                                              "Inflated-ParFilter", "Non-adaptive-ParFilter")),]
-TPR_dat <- TPR_dat[ !(TPR_dat$Methods %in% c("Adaptive-BH", "BY", "Adaptive-CoFilter-BH", "Oracle",
+TPR_dat <- TPR_dat[ !(TPR_dat$Methods %in% c("Adaptive-BH", "BY", "Adaptive-CoFilter-BH",
                                              "Inflated-ParFilter", "Non-adaptive-ParFilter")),]
 
 #methods_index <- c(1,2,5,7,8,9,10,14)
@@ -105,7 +119,7 @@ line_ref <- line_ref[methods_index]
 alpha_ref <- alpha_ref[methods_index]
 
 FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
-                                                  "3 / '['*3*']'", 
+                                                  "3 / '['*3*']'",
                                                   "4 / '['*4*']'",
                                                   "5 / '['*5*']'"),], aes(x=mu,
                                                                           y = FDR,
@@ -116,7 +130,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
                                                                           alpha=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   scale_linetype_manual(values = line_ref) +
   scale_alpha_manual(values = alpha_ref) +
@@ -129,7 +143,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
   theme(legend.title=element_blank())
 
 TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*2*']'",
-                                                  "3 / '['*3*']'", 
+                                                  "3 / '['*3*']'",
                                                   "4 / '['*4*']'",
                                                   "5 / '['*5*']'"),], aes(x=mu,
                                                                           y = TPR,
@@ -140,7 +154,7 @@ TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*2*']'",
                                                                           alpha=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   scale_linetype_manual(values = line_ref) +
   scale_alpha_manual(values = alpha_ref) +
@@ -161,7 +175,7 @@ ggarrange(FDR_plot,TPR_plot,ncol = 1, nrow = 2,
 dev.off()
 
 #FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*3*']'",
-#                                                  "3 / '['*4*']'", 
+#                                                  "3 / '['*4*']'",
 #                                                  "3 / '['*5*']'",
 #                                                  "4 / '['*5*']'"),], aes(x=mu,
 #                                                                          y = FDR,
@@ -171,7 +185,7 @@ dev.off()
 #                                                                          color=Methods)) +
 #  geom_line() +
 #  geom_point() +
-#  scale_shape_manual(values=shape_ref) + 
+#  scale_shape_manual(values=shape_ref) +
 #  scale_color_manual(values = color_ref ) +
 #  facet_grid(un ~ xcoef, labeller = label_parsed) +
 #  #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
@@ -182,7 +196,7 @@ dev.off()
 #  theme(legend.title=element_blank())
 #
 #TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*3*']'",
-#                                                  "3 / '['*4*']'", 
+#                                                  "3 / '['*4*']'",
 #                                                  "3 / '['*5*']'",
 #                                                  "4 / '['*5*']'"),], aes(x=mu,
 #                                                                          y = TPR,
@@ -192,7 +206,7 @@ dev.off()
 #                                                                          color=Methods)) +
 #  geom_line() +
 #  geom_point() +
-#  scale_shape_manual(values=shape_ref) + 
+#  scale_shape_manual(values=shape_ref) +
 #  scale_color_manual(values = color_ref ) +
 #  scale_linetype_manual(values = line_ref) +
 #  facet_grid(un ~ xcoef, labeller = label_parsed) +

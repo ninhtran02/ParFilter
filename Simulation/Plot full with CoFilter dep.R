@@ -19,7 +19,7 @@ for(xcoef in xcoef_options){
       paral <- 1
       u <- u_n[1]
       n <- u_n[2]
-      file.name <- paste("Independence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
+      file.name <- paste("NegativeDependence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
       load(file = file.name)
       fdr_dat <- cbind.data.frame(reshape2::melt(FDR_list),xcoef,mu,paste(u,n, sep = ""))
       tpr_dat <- cbind.data.frame(reshape2::melt(TPR_list),xcoef,mu,paste(u,n, sep = ""))
@@ -28,7 +28,7 @@ for(xcoef in xcoef_options){
       for(paral in paral_options){
         u <- u_n[1]
         n <- u_n[2]
-        file.name <- paste("Independence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
+        file.name <- paste("NegativeDependence/m = 5000/OG nu_mat_maker_uiGk lambda0.5/","mu",mu,"setup",u,n,"xcoef",xcoef,"paral",paral,".RD",sep = "")
         load(file = file.name)
         fdr_dat$value <- fdr_dat$value + cbind.data.frame(reshape2::melt(FDR_list),xcoef,mu,paste(u,n, sep = ""))$value/max(paral_options)
         tpr_dat$value <- tpr_dat$value + cbind.data.frame(reshape2::melt(TPR_list),xcoef,mu,paste(u,n, sep = ""))$value/max(paral_options)
@@ -73,7 +73,7 @@ levels(FDR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
 
 FDR_dat$Methods <- factor(FDR_dat$Methods, levels = c("ParFilter", "BH", "BY", "No-Covar-ParFilter", "AdaPT", "Adaptive-CoFilter-BH", "AdaFilter-BH",  "CAMT", "Inflated-ParFilter",
                                                       "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH" #, "Oracle"
-                                                      ))
+))
 
 TPR_dat$xcoef <- as.factor(x = TPR_dat$xcoef)
 levels(TPR_dat$xcoef) <- c("Non-informative~(gamma[1] == 0)",
@@ -103,14 +103,14 @@ levels(TPR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
                              "ParFilter")
 TPR_dat$Methods <- factor(TPR_dat$Methods, levels = c("ParFilter", "BH", "BY", "No-Covar-ParFilter", "AdaPT", "Adaptive-CoFilter-BH", "AdaFilter-BH",  "CAMT", "Inflated-ParFilter",
                                                       "Inflated-AdaFilter-BH", "IHW", "Non-adaptive-ParFilter", "CoFilter-BH",  "Adaptive-BH" #,"Oracle"
-                                                      ))
+))
 
 
 
 
 color_ref <- c("#0006b1", 15, "#795548",  "#ae0000", 11, "#e6d7ff", "#3b444b", 14, "#673AB7", 12, 13, "#808000", "#DE7E5D", "#FF5722"
                #,16
-               )
+)
 
 #color_ref <- c("#3b444b", 11, # "AdaFilter-BH", "AdaPT"
 #               "#FF5722", # "Adaptive-BH"
@@ -128,7 +128,7 @@ color_ref <- c("#0006b1", 15, "#795548",  "#ae0000", 11, "#e6d7ff", "#3b444b", 1
 
 shape_ref <- c(7, 2, 9, 14, 1, 12, 0, 3, 10, 5, 4, 11, 13, 8
                #, 6
-               )
+)
 #shape_ref <- c(0, 1, # "AdaFilter-BH", "AdaPT"
 #               8, # "Adaptive-BH"
 #               12, # #Adaptive-CoFilter-BH
@@ -145,7 +145,7 @@ shape_ref <- c(7, 2, 9, 14, 1, 12, 0, 3, 10, 5, 4, 11, 13, 8
 
 alpha_ref <- c(1, 0.75, 0.75, 1, 0.75, 0.75, 0.9, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75
                #, 0.75
-               )
+)
 #alpha_ref <- c(0.90, 0.75, # "AdaFilter-BH", "AdaPT"
 #               0.75, # "Adaptive-BH"
 #               0.75, # Adaptive-CoFilter-BH
@@ -161,7 +161,7 @@ alpha_ref <- c(1, 0.75, 0.75, 1, 0.75, 0.75, 0.9, 0.75, 0.75, 0.75, 0.75, 0.75, 
 #               1) # "ParFilter"
 
 line_ref <- c(1, 11, 10, 1, 14, 12, 3, 9, 5, 6, 7, 4, 8, 13#, 2
-              )
+)
 #line_ref <- c(3, # "AdaFilter-BH"
 #              14, # "AdaPT"
 #              13, # "Adaptive-BH"
@@ -229,7 +229,7 @@ TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*2*']'",
 
 #pdf(file = "u = n Results.pdf",
 #    width = 9.6, height = 9.6)#12.8)
-pdf(file = "u_equal_n_Results_full_with_CoFilter_and_No_Covar_ParFilter.pdf",
+pdf(file = "dep_u_equal_n_Results_full_with_CoFilter_and_No_Covar_ParFilter.pdf",
     width = 9.6, height = 13.6)
 ggarrange(FDR_plot,TPR_plot,ncol = 1, nrow = 2,
           common.legend = TRUE, legend = "bottom")
@@ -253,7 +253,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*3*']'",
   scale_alpha_manual(values = alpha_ref) +
   facet_grid(un ~ xcoef, labeller = label_parsed) +
   #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
-  ylab(TeX(r'(FDR$_{rep}$)')) +
+  ylab(TeX(r'(q-FDR$_{rep}$)')) +
   xlab( TeX(r'($\xi$)') ) +
   theme_bw() +
   geom_hline(yintercept = 0.05, linetype='dotted', size = 1) +
@@ -285,7 +285,7 @@ TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*3*']'",
   guides(color = guide_legend(direction = "horizontal")) +
   theme(legend.title=element_blank(), legend.position = "bottom")
 
-pdf(file = "u_less_n_Results_full_with_CoFilter_and_No_Covar_ParFilter.pdf",
+pdf(file = "dep_u_less_n_Results_full_with_CoFilter_and_No_Covar_ParFilter.pdf",
     width = 9.6, height = 13.6)
 ggarrange(FDR_plot,TPR_plot,ncol = 1, nrow = 2,
           common.legend = TRUE, legend = "bottom")

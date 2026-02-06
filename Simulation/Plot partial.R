@@ -1,4 +1,3 @@
-setwd("~/Library/CloudStorage/GoogleDrive-ninhtran021998@gmail.com/My Drive/PhD/Replicability/Paper Simulations/Covariate-Assisted")
 library(ggplot2)
 library(latex2exp)
 library(ggpubr)
@@ -46,7 +45,7 @@ levels(FDR_dat$un) <- c("2 / '['*2*']'",
                         "5 / '['*5*']'")
 
 FDR_dat$Methods <- as.factor(x = FDR_dat$Methods)
-levels(FDR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH", 
+levels(FDR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
                              "BH", "BY", "CAMT", "IHW", "Inflated-AdaFilter-BH",
                              "Inflated-ParFilter", "Non-adaptive-ParFilter", "Oracle", "ParFilter")
 
@@ -66,7 +65,7 @@ levels(TPR_dat$un) <- c("2 / '['*2*']'",
                         "5 / '['*5*']'")
 
 TPR_dat$Methods <- as.factor(x = TPR_dat$Methods)
-levels(TPR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH", 
+levels(TPR_dat$Methods) <- c("AdaFilter-BH", "AdaPT", "Adaptive-BH",
                              "BH", "BY", "CAMT", "IHW", "Inflated-AdaFilter-BH",
                              "Inflated-ParFilter", "Non-adaptive-ParFilter", "Oracle", "ParFilter")
 
@@ -97,7 +96,7 @@ shape_ref <- c(0, 1, # "AdaFilter-BH", "AdaPT"
                7) # "ParFilter"
 
 FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
-                                                  "3 / '['*3*']'", 
+                                                  "3 / '['*3*']'",
                                                   "4 / '['*4*']'",
                                                   "5 / '['*5*']'"),], aes(x=mu,
                                                                           y = FDR,
@@ -107,7 +106,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
                                                                           color=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   facet_grid(un ~ xcoef, labeller = label_parsed) +
   #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
@@ -118,7 +117,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*2*']'",
   theme(legend.title=element_blank())
 
 TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*2*']'",
-                                                  "3 / '['*3*']'", 
+                                                  "3 / '['*3*']'",
                                                   "4 / '['*4*']'",
                                                   "5 / '['*5*']'"),], aes(x=mu,
                                                                           y = TPR,
@@ -128,7 +127,7 @@ TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*2*']'",
                                                                           color=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   facet_grid(un ~ xcoef, labeller = label_parsed) +
   #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
@@ -147,7 +146,7 @@ ggarrange(FDR_plot,TPR_plot,ncol = 1, nrow = 2,
 dev.off()
 
 FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*3*']'",
-                                                  "3 / '['*4*']'", 
+                                                  "3 / '['*4*']'",
                                                   "3 / '['*5*']'",
                                                   "4 / '['*5*']'"),], aes(x=mu,
                                                                           y = FDR,
@@ -157,7 +156,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*3*']'",
                                                                           color=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   facet_grid(un ~ xcoef, labeller = label_parsed) +
   #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
@@ -168,7 +167,7 @@ FDR_plot <- ggplot(data=FDR_dat[FDR_dat$un %in% c("2 / '['*3*']'",
   theme(legend.title=element_blank())
 
 TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*3*']'",
-                                                  "3 / '['*4*']'", 
+                                                  "3 / '['*4*']'",
                                                   "3 / '['*5*']'",
                                                   "4 / '['*5*']'"),], aes(x=mu,
                                                                           y = TPR,
@@ -178,7 +177,7 @@ TPR_plot <- ggplot(data=TPR_dat[TPR_dat$un %in% c("2 / '['*3*']'",
                                                                           color=Methods)) +
   geom_line() +
   geom_point() +
-  scale_shape_manual(values=shape_ref) + 
+  scale_shape_manual(values=shape_ref) +
   scale_color_manual(values = color_ref ) +
   facet_grid(un ~ xcoef, labeller = label_parsed) +
   #scale_y_continuous(breaks = c(0,0.025,0.05,0.075,0.10)) +
