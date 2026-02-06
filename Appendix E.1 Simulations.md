@@ -24,11 +24,12 @@ mkdir -p SavedData/Independence/
 xcoef=$1
 mu=$2
 u_n=$3
+paral=$4
 
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain.R $xcoef $mu $u_n
+Rscript --vanilla Repmain.R $xcoef $mu $u_n $paral
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
@@ -37,6 +38,7 @@ Feel free to edit the `#SBATCH` commands to suit your preferences. For example, 
 3. Create a slurm file called `batch_submission_Repmain.slurm` as follows:
 ```
 #!/bin/bash
+#SBATCH --mail-user=$ninht@student.unimelb.edu.au
 
 for xcoef in {1..3}
 do
@@ -47,7 +49,12 @@ do
 for u_n in {1..8}
 do
 
-sbatch Repmain.slurm $xcoef $mu $u_n
+for paral in {1..50}
+do
+
+sbatch Repmain.slurm $xcoef $mu $u_n $paral
+
+done
 
 done
 
