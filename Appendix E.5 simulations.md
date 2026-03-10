@@ -1,4 +1,4 @@
-# Reproducing the simulation results in Appendix E.4
+# Reproducing the simulation results in Appendix E.5
 To reproduce the simulation results in an efficient manner, we assume the reader has access to an account in a high performance computing (HPC) system running the *Slurm Workload Manager*. Follow the steps below:
 
 1. Log onto your own HPC account.
@@ -40,7 +40,7 @@ Feel free to edit the `#SBATCH` commands to suit your preferences. For example, 
 #!/bin/bash
 #SBATCH --mail-user=$ninht@student.unimelb.edu.au
 
-for pi1pi1 in {1..3}
+for xcoef in {1..3}
 do
 
 for mu in {1..5}
@@ -52,7 +52,7 @@ do
 for paral in {1..50}
 do
 
-sbatch Repmain_PF.slurm $pi1pi1 $mu $u_n $paral
+sbatch Repmain_PF.slurm $xcoef $mu $u_n $paral
 
 done
 
@@ -66,9 +66,9 @@ done
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
 
-Download *Repmain_uleqn.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
+Download *Repmain_PF.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\_Repmain_PF.slurm* with the command:
+5. To submit the jobs, run the file *batch\_submission\_Repmain_uleqn.slurm* with the command:
 ```
 sbatch batch_submission_Repmain_PF.slurm
 ```
