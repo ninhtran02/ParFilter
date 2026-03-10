@@ -17,7 +17,7 @@ u_n_index = as.numeric(cmd_args[3])
 paral_index = as.numeric(cmd_args[4])
 
 nsims <- 10
-xcoef_options <- c(0.0, 1.0, 1.5)
+xcoef_options <- c(0.0, 1.0, 1.25)
 mu_options <- c(0.74, 0.76, 0.78, 0.80, 0.82)
 u_n_options <- list(c(5,5),c(6,6),c(7,7),c(8,8))
 paral_options <- 1:50

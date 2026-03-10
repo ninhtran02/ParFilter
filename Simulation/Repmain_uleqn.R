@@ -19,9 +19,9 @@ u_n_index = as.numeric(cmd_args[3])
 paral_index = as.numeric(cmd_args[4])
 
 nsims <- 10
-pi1pi1_options <- c(0.75, 0.85, 0.95)
+pi1pi1_options <- c(0.5, 0.7, 0.9)
 mu_options <- c(0.74, 0.76, 0.78, 0.80, 0.82)
-u_n_options <- list(c(2,2),c(2,3),c(3,3),c(3,4),c(4,4),c(3,5),c(4,5),c(5,5))
+u_n_options <- list(c(2,3),c(2,4),c(3,4),c(3,5),c(4,5),c(3,6),c(4,6),c(5,6))
 paral_options <- 1:50
 rho <- 0.0
 
@@ -74,7 +74,7 @@ for(iter in 1:nsims){
         K <- n
       }
       if(u < n){
-        K <- 2
+        K <- u
       }
       R_set <- ParFilter(P = P, u = u, X_list = X_list,
                          K = K, direction = "negative",
@@ -89,7 +89,7 @@ for(iter in 1:nsims){
         K <- n
       }
       if(u < n){
-        K <- 2
+        K <- u
       }
       R_set <- ParFilter(P = P, u = u, X_list = X_list,
                          K = K, direction = "negative",
@@ -104,7 +104,7 @@ for(iter in 1:nsims){
         K <- n
       }
       if(u < n){
-        K <- 2
+        K <- u
       }
       X_list_no_covar <- rep(list(rep(0,m)),n)
       R_set <- ParFilter(P = P, u = u, X_list = X_list_no_covar,
@@ -120,7 +120,7 @@ for(iter in 1:nsims){
         K <- n
       }
       if(u < n){
-        K <- 2
+        K <- u
       }
       R_set <- ParFilter(P = P, u = u, X_list = X_list,
                          K = K, direction = "negative",
