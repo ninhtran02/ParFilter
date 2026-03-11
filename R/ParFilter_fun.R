@@ -112,7 +112,7 @@ groups_list_and_u_mat_maker <- function(u, K = 2, X_list = NULL,
     for(i in 1:m){
       adj <- ifelse(direction == "negative", yes = 1, no = -1)
       order_x_row <- order(adj*x_row)
-      rank_x_row <- rank(adj*x_row)
+      rank_x_row <- rank(adj*x_row, ties.method = "first")
       # If K == n, make the groups nice
       if(K == n){
         order_x_row <- 1:n
@@ -134,7 +134,7 @@ groups_list_and_u_mat_maker <- function(u, K = 2, X_list = NULL,
     x_row <- X_mat[i,]
     adj <- ifelse(direction == "negative", yes = 1, no = -1)
     order_x_row <- order(adj*x_row)
-    rank_x_row <- rank(adj*x_row)
+    rank_x_row <- rank(adj*x_row, ties.method = "first")
     # If K == n, make the groups nice
     if(K == n){
       order_x_row <- 1:n

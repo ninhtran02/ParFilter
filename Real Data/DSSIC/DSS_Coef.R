@@ -1,6 +1,7 @@
 # Load the data
 #load("GSE34553_data.RData")
 #load("GSE35651_data.RData")
+#load("Competing Methods.R")
 
 gene_names <- intersect(names(p_GSE34553), names(p_GSE35651))
 gene_names <- gene_names[-which(gene_names == "")]
@@ -14,9 +15,21 @@ final_covars_GSE34553 <- covars_GSE34553[gene_names]
 final_covars_GSE35651 <- covars_GSE35651[gene_names,]
 final_covars_mat <- cbind(final_covars_GSE34553,final_covars_GSE35651)
 
-X_list <- list(splines::bs(final_covars_GSE34553, df = 6), 
-               cbind(splines::bs(final_covars_GSE35651[,1], df = 6),
-                     splines::bs(final_covars_GSE35651[,2], df = 6)) )
+#X_list <- list(splines::bs(final_covars_GSE34553, df = 6), 
+#               cbind(splines::bs(final_covars_GSE35651[,1], df = 6),
+#                     splines::bs(final_covars_GSE35651[,2], df = 6)) )
+
+#x_covar_1 <- cbind(splines::bs(final_covars_GSE35651[,1], df = 6),
+#                   splines::bs(final_covars_GSE35651[,2], df = 6)) 
+#x_covar_2 <- splines::bs(final_covars_GSE34553, df = 6)
+
+X_list <- list(splines::bs(scale(final_covars_GSE34553), df = 2), 
+               cbind(splines::bs(scale(final_covars_GSE35651[,1]), df = 2),
+                     splines::bs(scale(final_covars_GSE35651[,2]), df = 2)) )
+x_covar_1 <- cbind(splines::bs(scale(final_covars_GSE35651[,1]), df = 2),
+                   splines::bs(scale(final_covars_GSE35651[,2]), df = 2)) 
+x_covar_2 <- splines::bs(scale(final_covars_GSE34553), df = 2)
+
 
 methods <- c("ParFilter", "BH", "Inflated-AdaFilter-BH",
              "AdaFilter-BH", "CAMT", "AdaPT", "IHW",
@@ -35,7 +48,9 @@ m <- nrow(p_mat)
 for(method in methods){
   
   if(method == "ParFilter"){
-    R_set <- ParFilter(P = p_mat, u = 2, X_list = list(PF_covars, PF_covars),
+    R_set <- ParFilter(P = p_mat, u = 2, X_list = 
+                         list(PF_covars, PF_covars),
+                         #list(x_covar_2, x_covar_1),
                        K = 2, direction = "negative",
                        q = 0.05, lambda_vec =  rep(lambda,K))
     R_05_list[[method]] <- R_set
@@ -139,24 +154,29 @@ R_05_plot <- ggplot(R_05_dat, aes(x=Method, y= Rejections, fill=Method )) +
   geom_text(aes(label=Rejections), vjust=-0.5, color="black",
             position = position_dodge(0.9), size=3.5)
 
-pdf(file = "DSS_lambda050.pdf",
-    width = 6, height = 5)
-R_05_plot
-dev.off()
+
+
+
+
+
+#pdf(file = "DSS_lambda050_Coef.pdf",
+#    width = 6, height = 5)
+#R_05_plot
+#dev.off()
 
 reference_PC_p_values <- apply(X = p_mat, MARGIN = 1, FUN = stouffer_fun, u = 2)
 names(reference_PC_p_values) <- gene_names
 
 not_PF_R_set <- unique(c(R_05_list$BH,
-                       R_05_list$`Inflated-AdaFilter-BH`,
-                       R_05_list$`AdaFilter-BH`,
-                       R_05_list$CAMT,
-                       R_05_list$AdaPT,
-                       R_05_list$IHW,
-                       R_05_list$`CoFilter-BH`,
-                       R_05_list$`No-Covar-ParFilter`))
+                         R_05_list$`Inflated-AdaFilter-BH`,
+                         R_05_list$`AdaFilter-BH`,
+                         R_05_list$CAMT,
+                         R_05_list$AdaPT,
+                         R_05_list$IHW,
+                         R_05_list$`CoFilter-BH`,
+                         R_05_list$`No-Covar-ParFilter`))
 PF_R_set <- unique(c(R_05_list$ParFilter))
-  
+
 length(sort(reference_PC_p_values[setdiff(PF_R_set,not_PF_R_set)]))
 # TOP 15 genes by PF
 cbind(sort(reference_PC_p_values[setdiff(PF_R_set,not_PF_R_set)])[1:15])
@@ -175,3 +195,5 @@ PF_R_set <- unique(c(R_05_list$ParFilter,R_05_list$`No-Covar-ParFilter`))
 length(sort(reference_PC_p_values[setdiff(PF_R_set,not_PF_R_set)]))
 # TOP 15 genes by PF and No-covar-PF
 cbind(sort(reference_PC_p_values[setdiff(PF_R_set,not_PF_R_set)])[1:15])
+
+R_05_plot
