@@ -33,12 +33,12 @@ Rscript --vanilla Repmain_dep.R $xcoef $mu $u_n $paral
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
-Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
+Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
 3. Create a slurm file called `batch_submission_Repmain_dep.slurm` as follows:
 ```
 #!/bin/bash
-#SBATCH --mail-user=$ninht@student.unimelb.edu.au
+#SBATCH --mail-user=<your_email_address>
 
 for xcoef in {1..3}
 do
@@ -66,9 +66,9 @@ done
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
 
-Download *Repmain_dep.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
+Download *Repmain_dep.R*, *DataGen.R*, and *Competing Methods.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\_Repmain_dep.slurm* with the command:
+5. To submit the jobs, run the file *batch\_submission\Repmain_dep.slurm* with the command:
 ```
 sbatch batch_submission_Repmain_dep.slurm
 ```

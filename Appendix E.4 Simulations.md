@@ -9,10 +9,10 @@ cd    (your own working directory)/Paper Simulations/Covariate-Assisted
 ```
 3. Create the following directories in your working directory:
 ```
-mkdir -p SavedData/PF
+mkdir -p SavedData/cpch/
 ```
 
-3. Create a slurm file called `Repmain_uleqn.slurm` as follows:
+3. Create a slurm file called `Repmain_cpch.slurm` as follows:
 ```
 #!/bin/bash
 #SBATCH --job-name=REP
@@ -29,18 +29,18 @@ paral=$4
 module --force purge
 module load foss/2022a R/4.2.2
 
-Rscript --vanilla Repmain_uleqn.R $xcoef $mu $u_n $paral
+Rscript --vanilla Repmain_cpch.R $xcoef $mu $u_n $paral
 ```
 This slurm file will be used as a template for submitting a simulation job to the HPC under the parameter settings `xcoef`, `mu`, and `u_n`.
 
-Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `#SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
+Feel free to edit the `#SBATCH` commands to suit your preferences. For example, you can insert `SBATCH --mail-user=<your_email_address>` to send you a reminder email for when the simulation finishes. This may be useful since the simulations do take a while. 
 
-3. Create a slurm file called `batch_submission_Repmain_uleqn.slurm` as follows:
+3. Create a slurm file called `batch_submission_Repmain_cpch.slurm` as follows:
 ```
 #!/bin/bash
-#SBATCH --mail-user=$ninht@student.unimelb.edu.au
+SBATCH --mail-user=<your_email_address>
 
-for pi1pi1 in {1..3}
+for xcoef in {1..3}
 do
 
 for mu in {1..5}
@@ -52,7 +52,7 @@ do
 for paral in {1..50}
 do
 
-sbatch Repmain_uleqn.slurm $pi1pi1 $mu $u_n $paral
+sbatch Repmain_cpch.slurm $xcoef $mu $u_n $paral
 
 done
 
@@ -66,17 +66,17 @@ done
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
 
-Download *Repmain_uleqn.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
+Download *Repmain.R*, *DataGene.R*, *Competing Methods.R*, and *cpch_source.py* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\_Repmain_uleqn.slurm* with the command:
+5. To submit the jobs, run the file *batch_submission\Repmain_cpch.slurm* with the command:
 ```
-sbatch batch_submission_Repmain_PF.slurm
+sbatch batch_submission_Repmain_cpch.slurm
 ```
 Generally speaking, you can expect the simulations to finish within half a day or so.
 
-6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/uleqn*.
+6. The resulting data files saved to the subfolders within *Paper Simulation/Covariate-Assisted/SavedData/Independence*.
    
-7. To produce the plots, download and run *Plot uleqn.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
+7. To produce the plots, download and run *Plot cpch.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation).
 
 
 
