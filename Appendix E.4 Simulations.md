@@ -66,9 +66,9 @@ done
 This slurm file will be used to submit a simulation job to the HPC under every combination of parameter settings explored for `xcoef`, `mu`, and `u_n`. Yet again, feel free to add any `#SBATCH` commands to suit your preferences.
 
 
-Download *Repmain.R*, *DataGene.R*, and *Competing Methods.R* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
+Download *Repmain.R*, *DataGene.R*, *Competing Methods.R*, and *cpch_source.py* from [here](https://github.com/ninhtran02/ParFilter/tree/main/Simulation) and place it in the "Paper Simulations/Covariate-Assisted" folder. 
 
-5. To submit the jobs, run the file *batch\_submission\Repmain_cpch.slurm* with the command:
+5. To submit the jobs, run the file *batch_submission\Repmain_cpch.slurm* with the command:
 ```
 sbatch batch_submission_Repmain_cpch.slurm
 ```
